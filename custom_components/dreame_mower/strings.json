@@ -1,0 +1,737 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "Device is already configured",
+      "cannot_connect": "Failed to connect."
+    },
+    "error": {
+      "cannot_connect": "Failed to connect.",
+      "unsupported": "Device is not supported",
+      "wrong_token": "Checksum error, wrong token",
+      "2fa_required": "2FA Login required\n{url}",
+      "credentials_incomplete": "Credentials incomplete, please fill in username, password and country",
+      "login_error": "Could not login, check the credentials.",
+      "no_devices": "No supported devices found in this account on selected country."
+    },
+    "step": {
+      "user": {
+        "data": {
+          "configuration_type": "Configuration Type"
+        },
+        "description": "Map feature requires cloud connection and provides automatic configuration. If you don't want to use the map feature, you can select manual configuration."
+      },
+      "local": {
+        "data": {
+          "host": "Host",
+          "token": "Token"
+        },
+        "description": "You will need the 32 character API Token, see https://www.home-assistant.io/integrations/xiaomi_miio#retrieving-the-access-token for instructions."
+      },
+      "mi": {
+        "data": {
+          "username": "Username",
+          "password": "Password",
+          "country": "Server country",
+          "prefer_cloud": "Prefer cloud connection"
+        },
+        "description": "Log in to the Xiaomi Miio cloud, see https://www.openhab.org/addons/bindings/miio/#country-servers for the cloud server to use."
+      },
+      "dreame": {
+        "data": {
+          "username": "Username",
+          "password": "Password",
+          "country": "Server country"
+        },
+        "description": "Log in to the Dreamehome cloud."
+      },
+      "devices": {
+        "data": {
+          "devices": "Supported Devices"
+        },
+        "description": "Please select the Dreame Mower device you want to setup."
+      },
+      "options": {
+        "data": {
+          "name": "Name",
+          "color_scheme": "Map color scheme",
+          "icon_set": "Map icon set",
+          "notify": "Notification",
+          "map_objects": "Map objects",
+          "low_resolution": "Low resolution map",
+          "square": "Square map"
+        }
+      },
+      "reauth_confirm": {
+        "description": "Dreame Mower integration needs to re-authenticate your account in order to update the tokens or add missing cloud credentials.",
+        "title": "Reauthenticate Integration"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "color_scheme": "Map color scheme",
+          "icon_set": "Map icon set",
+          "notify": "Notification",
+          "map_objects": "Map objects",
+          "low_resolution": "Low resolution map",
+          "square": "Square map",
+          "configuration_type": "Configuration type",
+          "prefer_cloud": "Prefer cloud connection"
+        }
+      }
+    },
+    "error": {
+      "cloud_credentials_incomplete": "Cloud credentials incomplete, please fill in username, password and country"
+    }
+  },
+  "entity": {
+    "select": {
+      "cleaning_mode": {
+        "state": {
+          "sweeping": "Sweeping"
+        }
+      },
+      "wider_corner_coverage": {
+        "state": {
+          "off": "Off",
+          "high_frequency": "High Frequency",
+          "low_frequency": "Low Frequency"
+        }
+      },
+      "floor_material": {
+        "state": {
+          "none": "None",
+          "tile": "Floor Tile",
+          "wood": "Wood Floor"
+        }
+      },
+      "voice_assistant_language": {
+        "state": {
+          "default": "Default",
+          "english": "English",
+          "german": "German",
+          "chinese": "Chinese"
+        }
+      },
+      "order": {
+        "state": {
+          "not_set": "Not Set"
+        }
+      },
+      "floor_material_direction": {
+        "state": {
+          "vertical": "Vertical",
+          "horizontal": "Horizontal"
+        }
+      },
+      "visibility": {
+        "state": {
+          "visible": "Visible",
+          "hidden": "Hidden"
+        }
+      },
+      "cleangenius": {
+        "state": {
+          "off": "Off",
+          "routine_cleaning": "Routine Cleaning",
+          "deep_cleaning": "Deep Cleaning"
+        }
+      },
+      "cleaning_route": {
+        "state": {
+          "quick": "Quick",
+          "standard": "Standard",
+          "intensive": "Intensive",
+          "deep": "Deep"
+        }
+      }
+    },
+    "sensor": {
+      "state": {
+        "state": {
+          "unknown": "Unknown",
+          "sweeping": "Sweeping",
+          "charging": "Charging",
+          "error": "Error",
+          "idle": "[%key:common::state::idle%]",
+          "paused": "[%key:common::state::paused%]",
+          "returning": "Returning to dock",
+          "building": "Building",
+          "charging_completed": "Charging completed",
+          "upgrading": "Upgrading",
+          "clean_summon": "Summon to clean",
+          "station_reset": "Station reset",
+          "remote_control": "Remote controlling",
+          "smart_charging": "Smart charging",
+          "second_cleaning": "Second time cleaning",
+          "human_following": "Human following",
+          "spot_cleaning": "Spot cleaning",
+          "waiting_for_task": "Waiting for task",
+          "station_cleaning": "Station cleaning",
+          "shortcut": "Shortcut",
+          "monitoring": "Monitoring",
+          "monitoring_paused": "Monitoring paused"
+        }
+      },
+      "status": {
+        "state": {
+          "unknown": "Unknown",
+          "idle": "[%key:common::state::idle%]",
+          "paused": "[%key:common::state::paused%]",
+          "cleaning": "Cleaning",
+          "returning": "Returning to dock",
+          "spot_cleaning": "Spot cleaning",
+          "follow_wall_cleaning": "Follow wall cleaning",
+          "charging": "Charging",
+          "ota": "OTA",
+          "fct": "FCT",
+          "wifi_set": "WiFi set",
+          "power_off": "Power off",
+          "factory": "Factory",
+          "error": "Error",
+          "remote_control": "Remote control",
+          "sleeping": "Sleeping",
+          "self_repair": "Self repair",
+          "factory_test": "Factory test",
+          "standby": "Standby",
+          "room_cleaning": "Room cleaning",
+          "zone_cleaning": "Zone cleaning",
+          "fast_mapping": "Fast mapping",
+          "cruising_path": "Cruising on path",
+          "cruising_point": "Cruising to a point",
+          "summon_clean": "Summon to clean",
+          "shortcut": "Shortcut",
+          "person_follow": "Person follow"
+        }
+      },
+      "task_status": {
+        "state": {
+          "unknown": "Unknown",
+          "completed": "Completed",
+          "cleaning": "Cleaning",
+          "zone_cleaning": "Zone cleaning",
+          "room_cleaning": "Room cleaning",
+          "spot_cleaning": "Spot cleaning",
+          "fast_mapping": "Fast mapping",
+          "cleaning_paused": "Cleaning paused",
+          "room_cleaning_paused": "Room cleaning paused",
+          "zone_cleaning_paused": "Zone cleaning paused",
+          "spot_cleaning_paused": "Spot cleaning paused",
+          "map_cleaning_paused": "Map cleaning paused",
+          "docking_paused": "Docking paused",
+          "zone_docking_paused": "Zone docking paused",
+          "room_docking_paused": "Room docking paused",
+          "cruising_path": "Cruising on path",
+          "cruising_path_paused": "Cruising on path paused",
+          "cruising_point": "Cruising to a point",
+          "cruising_point_paused": "Cruising to a point paused",
+          "summon_clean_paused": "Summon to clean paused",
+          "returning_to_install_mop": "Returning to install mop",
+          "returning_to_remove_mop": "Returning to remove mop"
+        }
+      },
+      "error": {
+        "state": {
+          "unknown": "Unknown error code",
+          "no_error": "No error",
+          "drop": "Wheels are suspended",
+          "cliff": "Cliff sensor error",
+          "bumper": "Collision sensor is stuck",
+          "gesture": "Robot is tilted",
+          "bumper_repeat": "Collision sensor is stuck",
+          "drop_repeat": "Wheels are suspended",
+          "optical_flow": "Optical flow sensor error",
+          "brush": "The blades are wrapped",
+          "side_brush": "The side brush wrapped",
+          "fan": "The filter not dry or blocked",
+          "left_wheel_motor": "The robot is stuck, or its left wheel may be blocked by foreign objects",
+          "right_wheel_motor": "The robot is stuck, or its right wheel may be blocked by foreign objects",
+          "turn_suffocate": "The robot is stuck, or cannot turn",
+          "forward_suffocate": "The robot is stuck, or cannot go forward",
+          "charger_get": "Cannot find base",
+          "battery_low": "Low battery",
+          "charge_fault": "Charging error",
+          "battery_percentage": "Battery level error",
+          "heart": "Internal error",
+          "camera_occlusion": "Visual positioning sensor error",
+          "move": "Move sensor error",
+          "flow_shielding": "Optical sensor error",
+          "infrared_shielding": "Infrared shielding error",
+          "charge_no_electric": "The charging dock is not powered on",
+          "battery_fault": "Battery error",
+          "fan_speed_error": "Fan speed sensor error",
+          "left_wheell_speed": "Left wheel may be blocked by foreign objects",
+          "right_wheell_speed": "Right wheel may be blocked by foreign objects",
+          "bmi055_acce": "Accelerometer error",
+          "bmi055_gyro": "Gyro error",
+          "xv7001": "Gyro error",
+          "left_magnet": "Left magnet sensor error",
+          "right_magnet": "Right magnet sensor error",
+          "flow_error": "Flow sensor error",
+          "infrared_fault": "Infrared error",
+          "camera_fault": "Camera error",
+          "strong_magnet": "Strong magnetic field detected",
+          "rtc": "RTC error",
+          "auto_key_trig": "Internal error",
+          "p3v3": "Internal error",
+          "camera_idle": "Internal error",
+          "blocked": "Cleanup route is blocked, returning to the dock.",
+          "lds_error": "Laser distance sensor error",
+          "lds_bumper": "Laser distance sensor bumper error",
+          "filter_blocked": "The filter not dry or blocked",
+          "edge": "Edge sensor error",
+          "laser": "The 3D obstacle avoidance sensor is malfunctioning.",
+          "ultrasonic": "The ultrasonic sensor is malfunctioning.",
+          "no_go_zone": "No-Go zone or virtual wall detected.",
+          "route": "Cleanup route is blocked.",
+          "restricted": "Detected that the mower-mop is in a restricted area.",
+          "station_disconnected": "Base station not powered on",
+          "low_battery_turn_off": "Low battery. Robot will shut down soon.",
+          "robot_in_hidden_room": "Hidden area. Please move the robot to the appropriate area and retry.",
+          "return_to_charge_failed": "Failed to return to charge."
+        }
+      },
+      "charging_status": {
+        "state": {
+          "unknown": "Unknown",
+          "charging": "Charging",
+          "not_charging": "Not charging",
+          "return_to_charge": "Return to charge",
+          "charging_completed": "Charging completed"
+        }
+      },
+      "relocation_status": {
+        "state": {
+          "unknown": "Unknown",
+          "located": "Located",
+          "locating": "Locating",
+          "failed": "Failed",
+          "success": "Success"
+        }
+      },
+      "stream_status": {
+        "state": {
+          "unknown": "Unknown",
+          "idle": "[%key:common::state::idle%]",
+          "video": "Video",
+          "audio": "Audio",
+          "recording": "Recording"
+        }
+      },
+      "task_type": {
+        "state": {
+          "standard": "Standard cleaning",
+          "standard_paused": "Standard cleaning paused",
+          "custom": "Custom cleaning",
+          "custom_paused": "Custom cleaning paused",
+          "shortcut": "Shortcut cleaning",
+          "shortcut_paused": "Shortcut cleaning paused",
+          "scheduled": "Scheduled cleaning",
+          "scheduled_paused": "Scheduled cleaning paused",
+          "smart": "Smart cleaning",
+          "smart_paused": "Smart cleaning paused",
+          "partial": "Partial cleaning",
+          "partial_paused": "Partial cleaning paused",
+          "summon": "Summon cleaning",
+          "summon_paused": "Summon cleaning paused"
+        }
+      }
+    }
+  },
+  "services": {
+    "mower_clean_segment": {
+      "name": "Clean Segment",
+      "description": "Start the cleaning operation in the selected rooms.",
+      "fields": {
+        "segments": {
+          "name": "Segments",
+          "description": "List of rooms to be cleaned. Only room's Character or an array of room's character, cleaning times, fan speed and mop mode to override the default values per room."
+        },
+        "repeats": {
+          "name": "Repeats",
+          "description": "Number of cleaning passes for every selected room (unless it is overridden by customized cleaning parameter)."
+        }
+      }
+    },
+    "mower_clean_zone": {
+      "name": "Clean Zone",
+      "description": "Start the cleaning operation in the selected area.",
+      "fields": {
+        "zone": {
+          "name": "Zone",
+          "description": "Coordinates."
+        },
+        "repeats": {
+          "name": "Repeats",
+          "description": "Number of cleaning passes for every selected zone."
+        }
+      }
+    },
+    "mower_clean_spot": {
+      "name": "Clean Spot",
+      "description": "Start the cleaning operation in the selected points on the map.",
+      "fields": {
+        "points": {
+          "name": "Points",
+          "description": "List of coordinates to be cleaned."
+        },
+        "repeats": {
+          "name": "Repeats",
+          "description": "Number of cleaning passes for every selected zone."
+        }
+      }
+    },
+    "mower_goto": {
+      "name": "Go To",
+      "description": "Go to the coordinate of the map and stop.",
+      "fields": {
+        "x": {
+          "name": "X",
+          "description": "X Coordinate of the point."
+        },
+        "y": {
+          "name": "Y",
+          "description": "Y Coordinate of the point."
+        }
+      }
+    },
+    "mower_follow_path": {
+      "name": "Follow Path",
+      "description": "Follow list of coordinates on the map and return to base. (Only supported on mowers with camera)",
+      "fields": {
+        "points": {
+          "name": "Points",
+          "description": "List of coordinates of the path."
+        }
+      }
+    },
+    "mower_remote_control_move_step": {
+      "name": "Remote Control Move Step",
+      "description": "Remotely control move the bot one step.",
+      "fields": {
+        "rotation": {
+          "name": "Rotation",
+          "description": "Turn in binary degrees between -128 and 128."
+        },
+        "velocity": {
+          "name": "Velocity",
+          "description": "Move speed, from 100 (forward) to -300 (backward)."
+        }
+      }
+    },
+    "mower_install_voice_pack": {
+      "name": "Install Voice Pack",
+      "description": "Install official or custom voice pack.",
+      "fields": {
+        "lang_id": {
+          "name": "Language ID",
+          "description": "Language ID of this pack."
+        },
+        "url": {
+          "name": "URL",
+          "description": "Url of this pack it should be reachable by the mower bot."
+        },
+        "md5": {
+          "name": "MD5",
+          "description": "MD5 checksum of the language pack."
+        },
+        "size": {
+          "name": "Size",
+          "description": "Size of the language pack in bytes."
+        }
+      }
+    },
+    "mower_request_map": {
+      "name": "Request Map",
+      "description": "Request map data"
+    },
+    "mower_select_map": {
+      "name": "Select Map",
+      "description": "Select current map. Used when having multiple maps/floors.",
+      "fields": {
+        "map_id": {
+          "name": "Map ID",
+          "description": "ID of the map to be selected."
+        }
+      }
+    },
+    "mower_delete_map": {
+      "name": "Delete map",
+      "description": "Delete a map.",
+      "fields": {
+        "map_id": {
+          "name": "Map ID",
+          "description": "ID of the map to be deleted."
+        }
+      }
+    },
+    "mower_save_temporary_map": {
+      "name": "Save Temporary Map",
+      "description": "Save the temporary map."
+    },
+    "mower_discard_temporary_map": {
+      "name": "Discard Temporary Map",
+      "description": "Discard the temporary map."
+    },
+    "mower_replace_temporary_map": {
+      "name": "Replace Temporary Map",
+      "description": "Replace the temporary map with another saved map.",
+      "fields": {
+        "map_id": {
+          "name": "Map ID",
+          "description": "ID of the map to be replaced with."
+        }
+      }
+    },
+    "mower_rename_map": {
+      "name": "Rename map",
+      "description": "Rename a map.",
+      "fields": {
+        "map_id": {
+          "name": "Map ID",
+          "description": "ID of the map."
+        },
+        "map_name": {
+          "name": "Map Name",
+          "description": "New name of the map."
+        }
+      }
+    },
+    "mower_restore_map": {
+      "name": "Restore Map",
+      "description": "Restore a map.",
+      "fields": {
+        "map_id": {
+          "name": "Map ID",
+          "description": "ID of the map to be restored."
+        },
+        "recovery_map_index": {
+          "name": "Recovery Map Index",
+          "description": "Index of the saved recovery map"
+        }
+      }
+    },
+    "mower_restore_map_from_file": {
+      "name": "Restore Map From File",
+      "description": "Restore a map from file.",
+      "fields": {
+        "map_id": {
+          "name": "Map ID",
+          "description": "ID of the map to be restored."
+        },
+        "file_url": {
+          "name": "File Url",
+          "description": "Url of the saved bz2.gz or tar.gz file"
+        }
+      }
+    },
+    "mower_backup_map": {
+      "name": "Backup Map",
+      "description": "Backup a map to cloud.",
+      "fields": {
+        "map_id": {
+          "name": "Map ID",
+          "description": "ID of the map to be restored."
+        }
+      }
+    },
+    "mower_merge_segments": {
+      "name": "Merge Segments",
+      "description": "Merge rooms.",
+      "fields": {
+        "map_id": {
+          "name": "Map ID",
+          "description": "ID of the map."
+        },
+        "segments": {
+          "name": "Segments",
+          "description": "Room IDs."
+        }
+      }
+    },
+    "mower_split_segments": {
+      "name": "Split Segments",
+      "description": "Split rooms.",
+      "fields": {
+        "map_id": {
+          "name": "Map ID",
+          "description": "ID of the map."
+        },
+        "segment": {
+          "name": "Segment",
+          "description": "Room ID."
+        },
+        "line": {
+          "name": "Line",
+          "description": "Split line coordinates."
+        }
+      }
+    },
+    "mower_rename_segment": {
+      "name": "Rename Segment",
+      "description": "Rename a segment.",
+      "fields": {
+        "segment_id": {
+          "name": "Segment ID",
+          "description": "ID of the segment"
+        },
+        "segment_name": {
+          "name": "Segment Name",
+          "description": "New name of the segment"
+        }
+      }
+    },
+    "mower_set_cleaning_sequence": {
+      "name": "Set Cleaning Sequence",
+      "description": "Set room cleaning sequence. (Only on supported devices)",
+      "fields": {
+        "cleaning_sequence": {
+          "name": "Cleaning sequence",
+          "description": "Segment ID list of cleaning sequence."
+        }
+      }
+    },
+    "mower_set_custom_cleaning": {
+      "name": "Set Custom Cleaning",
+      "description": "Set custom cleaning parameters. (Only on supported devices)",
+      "fields": {
+        "segment_id": {
+          "name": "Segment ID",
+          "description": "Room IDs."
+        },
+        "cleaning_mode": {
+          "name": "Cleaning Mode",
+          "description": "Cleaning for each room (only supported on mowers with mop pad lifting feature)."
+        },
+        "repeats": {
+          "name": "Repeats",
+          "description": "Cleaning times for each room."
+        }
+      }
+    },
+    "mower_set_restricted_zone": {
+      "name": "Set Restricted Zone",
+      "description": "Define virtual walls, restricted zones, and/or no mop zones.",
+      "fields": {
+        "walls": {
+          "name": "Walls",
+          "description": "Virtual walls."
+        },
+        "zones": {
+          "name": "Zones",
+          "description": "No go zones."
+        },
+        "no_mops": {
+          "name": "No Mops",
+          "description": "No mop zones."
+        }
+      }
+    },
+    "mower_reset_consumable": {
+      "name": "Reset Consumable",
+      "description": "Reset a consumable.",
+      "fields": {
+        "consumable": {
+          "name": "Consumable",
+          "description": "Consumable type."
+        }
+      }
+    },
+    "mower_rename_shortcut": {
+      "name": "Rename Shortcut",
+      "description": "Rename a shortcut. (Only on supported devices)",
+      "fields": {
+        "shortcut_id": {
+          "name": "Shortcut ID",
+          "description": "ID of the shortcut."
+        },
+        "shortcut_name": {
+          "name": "Shortcut Name",
+          "description": "New name of the shortcut."
+        }
+      }
+    },
+    "mower_set_pathway": {
+      "name": "Set Pathway",
+      "description": "Define pathways.",
+      "fields": {
+        "pathways": {
+          "name": "Pathways",
+          "description": "Pathway line coordinates."
+        }
+      }
+    },
+    "mower_set_predefined_points": {
+      "name": "Set Predefined Points",
+      "description": "Define predefined coordinates on current map. (Only supported on mowers with camera)",
+      "fields": {
+        "points": {
+          "name": "Points",
+          "description": "List of coordinates to be saved."
+        }
+      }
+    },
+    "mower_set_obstacle_ignore": {
+      "name": "Set Obstacle Ignore",
+      "description": "Set ignore status of an obstacle. (Only supported on mowers with AI Obstacle detection feature)",
+      "fields": {
+        "x": {
+          "name": "X",
+          "description": "X Coordinate of the obstacle."
+        },
+        "y": {
+          "name": "Y",
+          "description": "Y Coordinate of the obstacle."
+        },
+        "obstacle_ignored": {
+          "name": "Obstacle Ignored",
+          "description": "Obstacle is ignored or not."
+        }
+      }
+    },
+    "mower_set_router_position": {
+      "name": "Set router position",
+      "description": "Set router position on current map. (Only supported on mowers with WiFi map feature)",
+      "fields": {
+        "x": {
+          "name": "X",
+          "description": "X Coordinate of the router."
+        },
+        "y": {
+          "name": "Y",
+          "description": "Y Coordinate of the router."
+        }
+      }
+    },
+    "select_select_previous": {
+      "name": "Select Previous",
+      "description": "Select the previous options of an select entity.",
+      "fields": {
+        "cycle": {
+          "name": "Cycle",
+          "description": "If the option should cycle from the first to the last."
+        }
+      }
+    },
+    "select_select_first": {
+      "name": "Select First",
+      "description": "Select the first option of an select entity."
+    },
+    "select_select_last": {
+      "name": "Select Last",
+      "description": "Select the last option of an select entity."
+    },
+    "select_select_next": {
+      "name": "Select Next",
+      "description": "Select the next options of an select entity.",
+      "fields": {
+        "cycle": {
+          "name": "Cycle",
+          "description": "If the option should cycle from the first to the last."
+        }
+      }
+    }
+  }
+}

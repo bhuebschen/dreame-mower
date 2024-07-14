@@ -1,0 +1,22 @@
+{
+  "domain": "dreame_mower",
+  "name": "Dreame Mower",
+  "codeowners": [
+    "@tasshack"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/Tasshack/dreame-mower",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/Tasshack/dreame-mower/issues",
+  "requirements": [
+    "pillow",
+    "numpy",
+    "pybase64",
+    "requests",
+    "pycryptodome",
+    "python-miio",
+    "py-mini-racer",
+    "paho-mqtt"
+  ],
+  "version": "v2.0.0b15"
+}

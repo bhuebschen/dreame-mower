@@ -1,0 +1,520 @@
+mower_clean_segment:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    segments:
+      example: "[3,2] or 3" 
+      required: true
+      selector:
+        object:
+    repeats:
+      example: "[1,2] or 1" 
+      required: false
+      selector:
+        number:
+          min: 1
+          max: 3
+
+mower_clean_zone:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    zone:
+      example: "[819,-263,4424,2105] or [[819,-263,4424,2105],[-2001,-3050,-542,515]]"
+      required: true
+      selector:
+        object:
+    repeats:
+      example: "[1,2] or 1" 
+      required: false
+      selector:
+        number:
+          min: 1
+          max: 3
+
+mower_clean_spot:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    points:
+      example: "[819,-263] or [[819,-263],[819,-263]]" 
+      required: true
+      selector:
+        object:
+    repeats:
+      example: "[1,2] or 1" 
+      required: false
+      selector:
+        number:
+          min: 1
+          max: 3
+
+mower_goto:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    x:
+      example: 819
+      required: true
+      selector:
+        number:
+          mode: box
+    y:
+      example: -263
+      required: true
+      selector:
+        number:
+          mode: box
+
+mower_follow_path:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    points:
+      example: "[819,-263] or [[819,-263],[900,-463]]" 
+      required: false
+      selector:
+        object:
+
+mower_remote_control_move_step:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    rotation:
+      example: 64
+      required: true
+      selector:
+        number:
+          min: -128
+          max: 128
+          mode: box
+    velocity:
+      example: 100
+      required: true
+      selector:
+        number:
+          min: -300
+          max: 100
+          mode: box
+
+mower_install_voice_pack:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    lang_id:
+      example: "DE"
+      required: true
+      selector:
+        text:
+    url:
+      example: "http://awsde0.fds.api.xiaomi.com/dreame-product/dreame.mower.p2009/voices/package/deyu.tar.gz"
+      required: true
+      selector:
+        text:
+          type: url
+    md5:
+      example: "d25986c1f608c0897475707e77d856f9"
+      required: true
+      selector:
+        text:
+    size:
+      example: 4067845
+      required: true
+      selector:
+        number:
+          mode: box
+
+mower_request_map:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+
+mower_select_map:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    map_id:
+      example: 14
+      required: true
+      selector:
+        number:
+          mode: box
+
+mower_delete_map:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    map_id:
+      example: 14
+      required: false
+      selector:
+        number:
+          mode: box
+
+mower_save_temporary_map:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+
+mower_discard_temporary_map:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+
+mower_replace_temporary_map:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    map_id:
+      example: 14
+      required: false
+      selector:
+        number:
+          mode: box
+
+mower_rename_map:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    map_id:
+      example: "14"
+      required: true
+      selector:
+        number:
+          mode: box
+    map_name:
+      example: "Ground Floor"
+      required: true
+      selector:
+        text:
+
+mower_restore_map:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    recovery_map_index:
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 4
+          mode: box
+    map_id:
+      example: 14
+      required: false
+      selector:
+        number:
+          mode: box
+
+mower_restore_map_from_file:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    file_url:
+      example: "http://192.168.1.10/local/2023-11-04-1724223415-423528451_284320462.1156.mb.tbz2"
+      required: true
+      selector:
+        text:
+          type: url
+    map_id:
+      example: 14
+      required: false
+      selector:
+        number:
+          mode: box
+
+mower_backup_map:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    map_id:
+      example: 14
+      required: false
+      selector:
+        number:
+          mode: box
+
+mower_merge_segments:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    map_id:
+      example: "14"
+      required: false
+      selector:
+        number:
+          mode: box
+    segments:
+      example: "[3,2]"
+      required: true
+      selector:
+        object:
+
+mower_split_segments:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    map_id:
+      example: "14"
+      required: false
+      selector:
+        number:
+          mode: box
+    segment:
+      example: "3"
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 60
+          mode: box
+    line:
+      example: "[819,-263,4424,2105]"
+      required: true
+      selector:
+        object:
+
+mower_rename_segment:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    segment_id:
+      example: "3"
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 60
+          mode: box
+    segment_name:
+      example: "Playroom"
+      required: true
+      selector:
+        text:
+
+mower_set_cleaning_sequence:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    cleaning_sequence:
+      example: "[5,3,2,1,4] or []"
+      required: true
+      selector:
+        object:
+
+mower_set_custom_cleaning:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    segment_id:
+      example: "[1,2,3,4,5]"
+      required: true
+      selector:
+        object:
+    cleaning_mode:
+      example: "[2,2,0,1,0]"
+      required: false
+      selector:
+        object:
+    repeats:
+      example: "[2,2,1,3,1]"
+      required: true
+      selector:
+        object:
+
+mower_set_restricted_zone:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    walls:
+      example: "[[819,-263,4424,2105],[-2001,-3050,-542,515]]"
+      required: false
+      selector:
+        object:
+    zones:
+      example: "[[819,-263,4424,2105],[-2001,-3050,-542,515]]"
+      required: false
+      selector:
+        object:
+    no_mops:
+      example: "[[819,-263,4424,2105],[-2001,-3050,-542,515]]"
+      required: false
+      selector:
+        object:
+
+mower_reset_consumable:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    consumable:
+      required: true
+      selector:
+        select:
+          options:
+            - "blades"
+            - "side_brush"
+            - "filter"
+            - "tank_filter"
+            - "sensor"
+            - "silver_ion"
+            - "lensbrush"
+            - "squeegee"
+
+mower_rename_shortcut:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    shortcut_id:
+      example: "32"
+      required: true
+      selector:
+        number:
+          mode: box
+
+mower_set_pathway:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    pathways:
+      example: "[[819,-263,4424,2105],[-2001,-3050,-542,515]]"
+      required: false
+      selector:
+        object:
+
+mower_set_predefined_points:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    points:
+      example: "[819,-263] or [[819,-263],[900,-463]]" 
+      required: false
+      selector:
+        object:
+
+mower_set_obstacle_ignore:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    x:
+      example: 819
+      required: true
+      selector:
+        number:
+          mode: box
+    y:
+      example: -263
+      required: true
+      selector:
+        number:
+          mode: box
+    obstacle_ignored:
+      example: "false"
+      required: true
+      selector:
+        boolean:
+
+mower_set_router_position:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: lawn_mower
+  fields:
+    x:
+      example: 819
+      required: true
+      selector:
+        number:
+          mode: box
+    y:
+      example: -263
+      required: true
+      selector:
+        number:
+          mode: box
+
+select_select_previous:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: select
+  fields:
+    cycle:
+      default: true
+      selector:
+        boolean:
+
+select_select_first:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: select
+
+select_select_last:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: select
+
+select_select_next:
+  target:
+    entity:
+      integration: dreame_mower
+      domain: select
+  fields:
+    cycle:
+      default: true
+      selector:
+        boolean:

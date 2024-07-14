@@ -1,0 +1,126 @@
+"""Integration platform for recorder."""
+
+from __future__ import annotations
+
+from homeassistant.core import HomeAssistant, callback
+
+from .dreame import DreameMowerProperty, DreameMowerAutoSwitchProperty
+from .dreame.const import (
+    ATTR_ZONES,
+    ATTR_CURRENT_SEGMENT,
+    ATTR_SELECTED_MAP,
+    ATTR_DID,
+    ATTR_STATUS,
+    ATTR_CLEANING_MODE,
+    ATTR_CLEANING_TIME,
+    ATTR_CLEANED_AREA,
+    ATTR_CALIBRATION,
+    ATTR_SELECTED,
+    ATTR_CLEANING_HISTORY_PICTURE,
+    ATTR_CRUISING_HISTORY_PICTURE,
+    ATTR_OBSTACLE_PICTURE,
+    ATTR_RECOVERY_MAP_PICTURE,
+    ATTR_RECOVERY_MAP_FILE,
+    ATTR_WIFI_MAP_PICTURE,
+    ATTR_MOWER_STATE,
+    ATTR_MAPPING_AVAILABLE,
+    ATTR_SEGMENT_CLEANING,
+    ATTR_ZONE_CLEANING,
+    ATTR_SPOT_CLEANING,
+    ATTR_CRUSING,
+    ATTR_HAS_SAVED_MAP,
+    ATTR_HAS_TEMPORARY_MAP,
+    ATTR_CLEANGENIUS,
+    ATTR_CAPABILITIES,
+)
+
+from .dreame.types import (
+    ATTR_ROBOT_POSITION,
+    ATTR_ZONE_ICON,
+    ATTR_ROTATION,
+    ATTR_UPDATED,
+    ATTR_FRAME_ID,
+)
+
+CAMERA_UNRECORDED_ATTRIBUTES = {
+    "access_token",
+    "entity_picture",
+    ATTR_ZONES,
+    ATTR_CALIBRATION,
+    ATTR_SELECTED,
+    ATTR_CLEANING_HISTORY_PICTURE,
+    ATTR_CRUISING_HISTORY_PICTURE,
+    ATTR_OBSTACLE_PICTURE,
+    ATTR_RECOVERY_MAP_PICTURE,
+    ATTR_RECOVERY_MAP_FILE,
+    ATTR_WIFI_MAP_PICTURE,
+    ATTR_ROBOT_POSITION,
+    ATTR_ZONE_ICON,
+    ATTR_ROTATION,
+    ATTR_UPDATED,
+    ATTR_FRAME_ID,
+}
+
+MOWER_UNRECORDED_ATTRIBUTES = {
+    ATTR_CURRENT_SEGMENT,
+    ATTR_SELECTED_MAP,
+    ATTR_DID,
+    ATTR_STATUS,
+    ATTR_CLEANING_MODE,
+    ATTR_CLEANING_TIME,
+    ATTR_CLEANED_AREA,
+    ATTR_MOWER_STATE,
+    ATTR_SEGMENT_CLEANING,
+    ATTR_ZONE_CLEANING,
+    ATTR_SPOT_CLEANING,
+    ATTR_CRUSING,
+    ATTR_HAS_SAVED_MAP,
+    ATTR_HAS_TEMPORARY_MAP,
+    ATTR_CLEANGENIUS,
+    ATTR_CAPABILITIES,
+    "fan_speed_list",
+    "fan_speed",
+    "battery_level",
+    "battery_icon",
+    "cleaning_mode_list",
+    "cleaning_route_list",
+    "cleangenius_list",
+    DreameMowerProperty.STATUS.name.lower(),
+    DreameMowerProperty.CLEANING_MODE.name.lower(),
+    DreameMowerProperty.ERROR.name.lower(),
+    DreameMowerProperty.CLEANING_TIME.name.lower(),
+    DreameMowerProperty.CLEANED_AREA.name.lower(),
+    DreameMowerProperty.BLADES_TIME_LEFT.name.lower(),
+    DreameMowerProperty.BLADES_LEFT.name.lower(),
+    DreameMowerProperty.SIDE_BRUSH_TIME_LEFT.name.lower(),
+    DreameMowerProperty.SIDE_BRUSH_LEFT.name.lower(),
+    DreameMowerProperty.FILTER_LEFT.name.lower(),
+    DreameMowerProperty.FILTER_TIME_LEFT.name.lower(),
+    DreameMowerProperty.SENSOR_DIRTY_LEFT.name.lower(),
+    DreameMowerProperty.SENSOR_DIRTY_TIME_LEFT.name.lower(),
+    DreameMowerProperty.SILVER_ION_LEFT.name.lower(),
+    DreameMowerProperty.SILVER_ION_TIME_LEFT.name.lower(),
+    DreameMowerProperty.LENSBRUSH_LEFT.name.lower(),
+    DreameMowerProperty.LENSBRUSH_TIME_LEFT.name.lower(),
+    DreameMowerProperty.SQUEEGEE_LEFT.name.lower(),
+    DreameMowerProperty.SQUEEGEE_TIME_LEFT.name.lower(),
+    DreameMowerProperty.TOTAL_CLEANED_AREA.name.lower(),
+    DreameMowerProperty.TOTAL_CLEANING_TIME.name.lower(),
+    DreameMowerProperty.CLEANING_COUNT.name.lower(),
+    DreameMowerProperty.CUSTOMIZED_CLEANING.name.lower(),
+    DreameMowerProperty.SERIAL_NUMBER.name.lower(),
+    DreameMowerProperty.NATION_MATCHED.name.lower(),
+    DreameMowerProperty.TOTAL_RUNTIME.name.lower(),
+    DreameMowerProperty.TOTAL_CRUISE_TIME.name.lower(),
+    DreameMowerProperty.CLEANING_PROGRESS.name.lower(),
+    DreameMowerProperty.INTELLIGENT_RECOGNITION.name.lower(),
+    DreameMowerProperty.MULTI_FLOOR_MAP.name.lower(),
+    DreameMowerAutoSwitchProperty.CLEANING_ROUTE.name.lower(),
+    DreameMowerAutoSwitchProperty.CLEANGENIUS.name.lower(),
+}
+
+
+@callback
+def exclude_attributes(hass: HomeAssistant) -> set[str]:
+    """Exclude mower, camera and sensor attributes from being recorded in the database."""
+    return frozenset(CAMERA_UNRECORDED_ATTRIBUTES) | frozenset(MOWER_UNRECORDED_ATTRIBUTES)

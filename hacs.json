@@ -1,0 +1,7 @@
+{
+  "name": "Dreame Mower",
+  "render_readme": false,
+  "homeassistant": "2023.6.0",
+  "zip_release": true,
+  "filename": "dreame_mower.zip"
+}
