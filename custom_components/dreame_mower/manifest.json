@@ -2,12 +2,12 @@
   "domain": "dreame_mower",
   "name": "Dreame Mower",
   "codeowners": [
-    "@tasshack"
+    "@bhuebschen"
   ],
   "config_flow": true,
-  "documentation": "https://github.com/Tasshack/dreame-mower",
+  "documentation": "https://github.com/bhuebschen/dreame-mower",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/Tasshack/dreame-mower/issues",
+  "issue_tracker": "https://github.com/bhuebschen/dreame-mower/issues",
   "requirements": [
     "pillow",
     "numpy",
@@ -18,5 +18,5 @@
     "py-mini-racer",
     "paho-mqtt"
   ],
-  "version": "v2.0.0b15"
+  "version": "v0.0.2-alpha"
 }
