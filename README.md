@@ -9,3 +9,5 @@ Please not that this is a modified version of Tasshack's "Dreame Vacuum" integra
 If you are interested in the (original) Vacuum-integration, please take a look at: https://github.com/Tasshack/dreame-vacuum
 
 #### I would be very pleased if others would also contribute to getting this integration fully functional 👀
+
+If you like it: leave me a star!
