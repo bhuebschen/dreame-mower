@@ -707,14 +707,14 @@ class DreameMowerDevice:
                         self._map_manager.request_next_map_list()
                 elif (
                     self.status.cleanup_started
-                    and not self.status.cleanup_completed
+                    and not self.status.mowing_completed
                     and (
                         self.status.status is DreameMowerStatus.BACK_HOME
                         or not self.status.running
                     )
                 ):
                     self.status.cleanup_started = False
-                    self.status.cleanup_completed = True
+                    self.status.mowing_completed = True
                     self._cleaning_history_update = time.time()
             else:
                 self.status.cleanup_started = not (
@@ -725,7 +725,7 @@ class DreameMowerDevice:
                         and previous_task_status is DreameMowerTaskStatus.COMPLETED
                     )
                 )
-                self.status.cleanup_completed = False
+                self.status.mowing_completed = False
 
             if self.status.go_to_zone is not None and not (
                 task_status is DreameMowerTaskStatus.ZONE_CLEANING
@@ -817,20 +817,20 @@ class DreameMowerDevice:
                 and self.status.started
             ):
                 self.status.cleanup_started = False
-                self.status.cleanup_completed = False
+                self.status.mowing_completed = False
                 self.status.go_to_zone.stop = True
                 self._restore_go_to_zone(True)
             elif (
                 not self.status.started
                 and self.status.cleanup_started
-                and not self.status.cleanup_completed
+                and not self.status.mowing_completed
                 and (
                     self.status.status is DreameMowerStatus.BACK_HOME
                     or not self.status.running
                 )
             ):
                 self.status.cleanup_started = False
-                self.status.cleanup_completed = True
+                self.status.mowing_completed = True
                 self._cleaning_history_update = time.time()
 
                 did = DreameMowerProperty.TASK_STATUS.value
@@ -2357,6 +2357,7 @@ class DreameMowerDevice:
                 DreameMowerAction.START_MOWING,
                 DreameMowerAction.PAUSE,
                 DreameMowerAction.DOCK,
+                DreameMowerAction.STOP,
             ]
         )
 
@@ -4680,7 +4681,7 @@ class DreameMowerDeviceStatus:
         self.cleaning_mode = None
         self.ai_policy_accepted = False
         self.go_to_zone: GoToZoneSettings = None
-        self.cleanup_completed: bool = False
+        self.mowing_completed: bool = False
         self.cleanup_started: bool = False
 
         self.stream_status = None
@@ -5899,7 +5900,7 @@ class DreameMowerDeviceStatus:
         if self._capability.custom_cleaning_mode:
             attributes[ATTR_CLEANING_MODE] = self.cleaning_mode.name
 
-        if self.cleanup_completed:
+        if self.mowing_completed:
             attributes.update(
                 {
                     ATTR_CLEANED_AREA: self._get_property(

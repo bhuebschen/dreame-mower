@@ -146,7 +146,7 @@ class DreameMowerDataUpdateCoordinator(DataUpdateCoordinator[DreameMowerDevice])
 
     def _task_status_changed(self, previous_value=None) -> None:
         if previous_value is not None:
-            if self._device.status.cleanup_completed:
+            if self._device.status.mowing_completed:
                 self._fire_event(EVENT_TASK_STATUS, self._device.status.job)
                 self._create_persistent_notification(NOTIFICATION_MOWING_COMPLETED, NOTIFICATION_ID_MOWING_COMPLETED)
                 self._check_consumables()
