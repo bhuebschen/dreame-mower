@@ -32,7 +32,7 @@ from .const import (
     FAN_SPEED_STANDARD,
     FAN_SPEED_STRONG,
     FAN_SPEED_TURBO,
-    INPUT_CLEANING_SEQUENCE,
+    INPUT_MOWING_SEQUENCE,
     INPUT_LANGUAGE_ID,
     INPUT_LINE,
     INPUT_MAP_ID,
@@ -41,7 +41,7 @@ from .const import (
     INPUT_RECOVERY_MAP_INDEX,
     INPUT_MD5,
     INPUT_REPEATS,
-    INPUT_CLEANING_MODE,
+    INPUT_MOWING_MODE,
     INPUT_ROTATION,
     INPUT_SEGMENT,
     INPUT_SEGMENT_ID,
@@ -63,9 +63,9 @@ from .const import (
     INPUT_OBSTACLE_IGNORED,
     INPUT_KEY,
     INPUT_VALUE,
-    SERVICE_CLEAN_ZONE,
-    SERVICE_CLEAN_SEGMENT,
-    SERVICE_CLEAN_SPOT,
+    SERVICE_MOW_ZONE,
+    SERVICE_MOW_SEGMENT,
+    SERVICE_MOW_SPOT,
     SERVICE_GOTO,
     SERVICE_FOLLOW_PATH,
     SERVICE_INSTALL_VOICE_PACK,
@@ -81,8 +81,8 @@ from .const import (
     SERVICE_RESTORE_MAP,
     SERVICE_RESTORE_MAP_FROM_FILE,
     SERVICE_BACKUP_MAP,
-    SERVICE_SET_CLEANING_SEQUENCE,
-    SERVICE_SET_CUSTOM_CLEANING,
+    SERVICE_SET_MOWING_SEQUENCE,
+    SERVICE_SET_CUSTOM_MOWING,
     SERVICE_SET_RESTRICTED_ZONE,
     SERVICE_SET_PATHWAY,
     SERVICE_SET_PREDEFINED_POINTS,
@@ -217,7 +217,7 @@ async def async_setup_entry(
     )
 
     platform.async_register_entity_service(
-        SERVICE_CLEAN_ZONE,
+        SERVICE_MOW_ZONE,
         {
             vol.Required(INPUT_ZONE): vol.Any(
                 [
@@ -245,7 +245,7 @@ async def async_setup_entry(
     )
 
     platform.async_register_entity_service(
-        SERVICE_CLEAN_SEGMENT,
+        SERVICE_MOW_SEGMENT,
         {
             vol.Required(INPUT_SEGMENTS_ARRAY): vol.Any(vol.Coerce(int), [vol.Coerce(int)]),
             vol.Optional(INPUT_REPEATS): vol.Any(vol.Coerce(int), [vol.Coerce(int)]),
@@ -254,7 +254,7 @@ async def async_setup_entry(
     )
 
     platform.async_register_entity_service(
-        SERVICE_CLEAN_SPOT,
+        SERVICE_MOW_SPOT,
         {
             vol.Required(INPUT_POINTS): vol.Any(
                 [
@@ -470,19 +470,19 @@ async def async_setup_entry(
     )
 
     platform.async_register_entity_service(
-        SERVICE_SET_CLEANING_SEQUENCE,
+        SERVICE_SET_MOWING_SEQUENCE,
         {
-            vol.Required(INPUT_CLEANING_SEQUENCE): cv.ensure_list,
+            vol.Required(INPUT_MOWING_SEQUENCE): cv.ensure_list,
         },
         DreameMower.async_set_cleaning_sequence.__name__,
     )
 
     platform.async_register_entity_service(
-        SERVICE_SET_CUSTOM_CLEANING,
+        SERVICE_SET_CUSTOM_MOWING,
         {
             vol.Required(INPUT_SEGMENT_ID): cv.ensure_list,
             vol.Required(INPUT_REPEATS): cv.ensure_list,
-            vol.Optional(INPUT_CLEANING_MODE): cv.ensure_list,
+            vol.Optional(INPUT_MOWING_MODE): cv.ensure_list,
         },
         DreameMower.async_set_custom_cleaning.__name__,
     )

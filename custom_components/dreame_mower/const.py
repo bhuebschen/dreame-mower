@@ -32,8 +32,8 @@ MAP_OBJECTS: Final = {
     "name": "Zone Names",
     "name_background": "Zone Name Background",
     "order": "Zone Order",
-    "cleaning_times": "Zone Cleaning Times",
-    "cleaning_mode": "Zone Cleaning Mode",
+    "mowing_times": "Zone Mowing Times",
+    "mowing_mode": "Zone Mowing Mode",
     "path": "Path",
     "no_go": "No Go Zones",
     "virtual_wall": "Virtual Walls",
@@ -42,7 +42,7 @@ MAP_OBJECTS: Final = {
     "active_point": "Active Points",
     "charger": "Charger Icon",
     "robot": "Robot Icon",
-    "cleaning_direction": "Cleaning Direction",
+    "mowing_direction": "Mowing Direction",
     "obstacle": "AI Obstacle",
     "pet": "Pet",
     "material": "Floor Material",
@@ -50,7 +50,7 @@ MAP_OBJECTS: Final = {
     "cruise_point": "Cruise Points",
 }
 NOTIFICATION: Final = {
-    "cleanup_completed": "Cleanup Completed",
+    "mowing_completed": "Mowing Completed",
     "consumable": "Consumable",
     "information": "Information",
     "warning": "Warning",
@@ -62,9 +62,9 @@ FAN_SPEED_STANDARD: Final = "Standard"
 FAN_SPEED_STRONG: Final = "Strong"
 FAN_SPEED_TURBO: Final = "Turbo"
 
-SERVICE_CLEAN_ZONE: Final = "mower_clean_zone"
-SERVICE_CLEAN_SEGMENT: Final = "mower_clean_segment"
-SERVICE_CLEAN_SPOT: Final = "mower_clean_spot"
+SERVICE_MOW_ZONE: Final = "mower_mow_zone"
+SERVICE_MOW_SEGMENT: Final = "mower_mow_segment"
+SERVICE_MOW_SPOT: Final = "mower_mow_spot"
 SERVICE_GOTO: Final = "mower_goto"
 SERVICE_FOLLOW_PATH: Final = "mower_follow_path"
 SERVICE_REQUEST_MAP: Final = "mower_request_map"
@@ -84,8 +84,8 @@ SERVICE_REPLACE_TEMPORARY_MAP: Final = "mower_replace_temporary_map"
 SERVICE_MERGE_SEGMENTS: Final = "mower_merge_segments"
 SERVICE_SPLIT_SEGMENTS: Final = "mower_split_segments"
 SERVICE_RENAME_SEGMENT: Final = "mower_rename_segment"
-SERVICE_SET_CLEANING_SEQUENCE: Final = "mower_set_cleaning_sequence"
-SERVICE_SET_CUSTOM_CLEANING: Final = "mower_set_custom_cleaning"
+SERVICE_SET_MOWING_SEQUENCE: Final = "mower_set_mowing_sequence"
+SERVICE_SET_CUSTOM_MOWING: Final = "mower_set_custom_mowing"
 SERVICE_INSTALL_VOICE_PACK: Final = "mower_install_voice_pack"
 SERVICE_RESET_CONSUMABLE: Final = "mower_reset_consumable"
 SERVICE_RENAME_SHORTCUT: Final = "mower_rename_shortcut"
@@ -110,7 +110,7 @@ INPUT_ZONE: Final = "zone"
 INPUT_ZONE_ARRAY: Final = "zones"
 INPUT_PATHWAY_ARRAY: Final = "pathways"
 INPUT_REPEATS: Final = "repeats"
-INPUT_CLEANING_MODE: Final = "cleaning_mode"
+INPUT_MOWING_MODE: Final = "mowing_mode"
 INPUT_SEGMENTS_ARRAY: Final = "segments"
 INPUT_SEGMENT: Final = "segment"
 INPUT_SEGMENT_ID: Final = "segment_id"
@@ -121,7 +121,7 @@ INPUT_DELAY: Final = "delay"
 INPUT_URL: Final = "url"
 INPUT_MD5: Final = "md5"
 INPUT_SIZE: Final = "size"
-INPUT_CLEANING_SEQUENCE: Final = "cleaning_sequence"
+INPUT_MOWING_SEQUENCE: Final = "mowing_sequence"
 INPUT_CONSUMABLE: Final = "consumable"
 INPUT_CYCLE: Final = "cycle"
 INPUT_POINTS: Final = "points"
@@ -142,7 +142,7 @@ CONSUMABLE_SILVER_ION = "silver_ion"
 CONSUMABLE_LENSBRUSH = "lensbrush"
 CONSUMABLE_SQUEEGEE = "squeegee"
 
-NOTIFICATION_ID_CLEANING_PAUSED: Final = "cleaning_paused"
+NOTIFICATION_ID_MOWING_PAUSED: Final = "mowing_paused"
 NOTIFICATION_ID_REPLACE_BLADES: Final = "replace_blades"
 NOTIFICATION_ID_REPLACE_SIDE_BRUSH: Final = "replace_side_brush"
 NOTIFICATION_ID_REPLACE_FILTER: Final = "replace_filter"
@@ -151,7 +151,7 @@ NOTIFICATION_ID_CLEAN_SENSOR: Final = "clean_sensor"
 NOTIFICATION_ID_SILVER_ION: Final = "silver_ion"
 NOTIFICATION_ID_REPLACE_LENSBRUSH: Final = "replace_lensbrush"
 NOTIFICATION_ID_REPLACE_SQUEEGEE: Final = "replace_squeegee"
-NOTIFICATION_ID_CLEANUP_COMPLETED: Final = "cleanup_completed"
+NOTIFICATION_ID_MOWING_COMPLETED: Final = "mowing_completed"
 NOTIFICATION_ID_WARNING: Final = "warning"
 NOTIFICATION_ID_ERROR: Final = "error"
 NOTIFICATION_ID_INFORMATION: Final = "information"
@@ -159,12 +159,12 @@ NOTIFICATION_ID_CONSUMABLE: Final = "consumable"
 NOTIFICATION_ID_REPLACE_TEMPORARY_MAP: Final = "replace_temporary_map"
 NOTIFICATION_ID_2FA_LOGIN: Final = "2fa_login"
 
-NOTIFICATION_CLEANUP_COMPLETED: Final = "### Cleanup completed"
-NOTIFICATION_RESUME_CLEANING: Final = (
-    "### Resume Cleaning Mode\nThe robot will automatically resume unfinished cleaning tasks after charging its battery to 80%."
+NOTIFICATION_MOWING_COMPLETED: Final = "### Mowing completed"
+NOTIFICATION_RESUME_MOWING: Final = (
+    "### Resume Mowing Mode\nThe robot will automatically resume mowing after charging its battery charged."
 )
-NOTIFICATION_RESUME_CLEANING_NOT_PERFORMED: Final = (
-    "### The robot is in the DND period\nRobot will resume cleaning after the DND period ends."
+NOTIFICATION_RESUME_MOWING_NOT_PERFORMED: Final = (
+    "### The robot is in the DND period\nRobot will resume mowing after the DND period ends."
 )
 NOTIFICATION_REPLACE_MAP: Final = "### A new map has been generated\nYou need to save or discard map before using it."
 NOTIFICATION_REPLACE_MULTI_MAP: Final = (

@@ -33,13 +33,13 @@ from .const import (
     CONF_ACCOUNT_TYPE,
     CONF_PREFER_CLOUD,
     CONTENT_TYPE,
-    NOTIFICATION_CLEANUP_COMPLETED,
-    NOTIFICATION_RESUME_CLEANING,
-    NOTIFICATION_RESUME_CLEANING_NOT_PERFORMED,
+    NOTIFICATION_MOWING_COMPLETED,
+    NOTIFICATION_RESUME_MOWING,
+    NOTIFICATION_RESUME_MOWING_NOT_PERFORMED,
     NOTIFICATION_REPLACE_MULTI_MAP,
     NOTIFICATION_REPLACE_MAP,
     NOTIFICATION_2FA_LOGIN,
-    NOTIFICATION_ID_CLEANING_PAUSED,
+    NOTIFICATION_ID_MOWING_PAUSED,
     NOTIFICATION_ID_REPLACE_BLADES,
     NOTIFICATION_ID_REPLACE_SIDE_BRUSH,
     NOTIFICATION_ID_REPLACE_FILTER,
@@ -48,7 +48,7 @@ from .const import (
     NOTIFICATION_ID_SILVER_ION,
     NOTIFICATION_ID_REPLACE_LENSBRUSH,
     NOTIFICATION_ID_REPLACE_SQUEEGEE,
-    NOTIFICATION_ID_CLEANUP_COMPLETED,
+    NOTIFICATION_ID_MOWING_COMPLETED,
     NOTIFICATION_ID_WARNING,
     NOTIFICATION_ID_ERROR,
     NOTIFICATION_ID_INFORMATION,
@@ -123,32 +123,32 @@ class DreameMowerDataUpdateCoordinator(DataUpdateCoordinator[DreameMowerDevice])
 
     def _cleaning_paused_changed(self, previous_value=None) -> None:
         if self._device.status.cleaning_paused:
-            notification = NOTIFICATION_RESUME_CLEANING
+            notification = NOTIFICATION_RESUME_MOWING
             if self._device.status.battery_level >= 80:
                 dnd_remaining = self._device.status.dnd_remaining
                 if dnd_remaining:
                     hour = math.floor(dnd_remaining / 3600)
                     minute = math.floor((dnd_remaining - hour * 3600) / 60)
-                    notification = f"{NOTIFICATION_RESUME_CLEANING_NOT_PERFORMED}\n## Cleaning will start in {hour} hour(s) and {minute} minutes(s)"
+                    notification = f"{NOTIFICATION_RESUME_MOWING_NOT_PERFORMED}\n## Mowing will start in {hour} hour(s) and {minute} minutes(s)"
                 self._fire_event(
                     EVENT_INFORMATION,
-                    {EVENT_INFORMATION: NOTIFICATION_ID_CLEANING_PAUSED},
+                    {EVENT_INFORMATION: NOTIFICATION_ID_MOWING_PAUSED},
                 )
             else:
                 self._fire_event(
                     EVENT_INFORMATION,
-                    {EVENT_INFORMATION: NOTIFICATION_ID_CLEANING_PAUSED},
+                    {EVENT_INFORMATION: NOTIFICATION_ID_MOWING_PAUSED},
                 )
 
-            self._create_persistent_notification(notification, NOTIFICATION_ID_CLEANING_PAUSED)
+            self._create_persistent_notification(notification, NOTIFICATION_ID_MOWING_PAUSED)
         else:
-            self._remove_persistent_notification(NOTIFICATION_ID_CLEANING_PAUSED)
+            self._remove_persistent_notification(NOTIFICATION_ID_MOWING_PAUSED)
 
     def _task_status_changed(self, previous_value=None) -> None:
         if previous_value is not None:
             if self._device.status.cleanup_completed:
                 self._fire_event(EVENT_TASK_STATUS, self._device.status.job)
-                self._create_persistent_notification(NOTIFICATION_CLEANUP_COMPLETED, NOTIFICATION_ID_CLEANUP_COMPLETED)
+                self._create_persistent_notification(NOTIFICATION_MOWING_COMPLETED, NOTIFICATION_ID_MOWING_COMPLETED)
                 self._check_consumables()
 
             elif previous_value == 0 and not self._device.status.fast_mapping and not self._device.status.cruising:
@@ -268,8 +268,8 @@ class DreameMowerDataUpdateCoordinator(DataUpdateCoordinator[DreameMowerDevice])
             and (self._notify or notification_id == NOTIFICATION_ID_2FA_LOGIN)
         ):
             if isinstance(self._notify, list) and notification_id != NOTIFICATION_ID_2FA_LOGIN:
-                if notification_id == NOTIFICATION_ID_CLEANUP_COMPLETED:
-                    if NOTIFICATION_ID_CLEANUP_COMPLETED not in self._notify:
+                if notification_id == NOTIFICATION_ID_MOWING_COMPLETED:
+                    if NOTIFICATION_ID_MOWING_COMPLETED not in self._notify:
                         return
                     notification_id = f"{notification_id}_{int(time.time())}"
                 elif NOTIFICATION_ID_WARNING in notification_id:
@@ -279,7 +279,7 @@ class DreameMowerDataUpdateCoordinator(DataUpdateCoordinator[DreameMowerDevice])
                     if NOTIFICATION_ID_ERROR not in self._notify:
                         return
                 elif (
-                    notification_id == NOTIFICATION_ID_CLEANING_PAUSED
+                    notification_id == NOTIFICATION_ID_MOWING_PAUSED
                 ):
                     if NOTIFICATION_ID_INFORMATION not in self._notify:
                         return
