@@ -197,6 +197,9 @@ class DreameMapMowerMapManager:
         self._capability: DreameMowerDeviceCapability = None
 
     def _request_map_from_cloud(self) -> bool:
+        # Disable map for now to prevent error in log
+        return False
+
         if self._protocol.cloud.dreame_cloud:
             return True
 
@@ -271,6 +274,9 @@ class DreameMapMowerMapManager:
         return len(map_data_result) or object_name is not None
 
     def _request_map(self, parameters: dict[str, Any] = None) -> dict[str, Any] | None:
+        # Disable map for now to prevent error in log
+        return None
+
         if parameters is None:
             parameters = {
                 MAP_REQUEST_PARAMETER_FRAME_TYPE: MapFrameType.I.name,
