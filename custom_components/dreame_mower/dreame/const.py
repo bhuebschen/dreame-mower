@@ -204,7 +204,7 @@ ERROR_LDS_ERROR: Final = "lds_error"
 ERROR_LDS_BUMPER: Final = "lds_bumper"
 ERROR_FILTER_BLOCKED: Final = "filter_blocked"
 ERROR_EDGE: Final = "edge"
-ERROR_LASER: Final = "laser"
+ERROR_WATER_ON_LIDAR: Final = "water_on_lidar"
 ERROR_ULTRASONIC: Final = "ultrasonic"
 ERROR_NO_GO_ZONE: Final = "no_go_zone"
 ERROR_ROUTE: Final = "route"
@@ -720,7 +720,7 @@ ERROR_CODE_TO_ERROR_NAME: Final = {
     DreameMowerErrorCode.LDS_BUMPER: ERROR_LDS_BUMPER,
     DreameMowerErrorCode.FILTER_BLOCKED: ERROR_FILTER_BLOCKED,
     DreameMowerErrorCode.EDGE: ERROR_EDGE,
-    DreameMowerErrorCode.LASER: ERROR_LASER,
+    DreameMowerErrorCode.WATER_ON_LIDAR: ERROR_WATER_ON_LIDAR,
     DreameMowerErrorCode.EDGE_2: ERROR_EDGE,
     DreameMowerErrorCode.ULTRASONIC: ERROR_ULTRASONIC,
     DreameMowerErrorCode.NO_GO_ZONE: ERROR_NO_GO_ZONE,
@@ -1022,9 +1022,8 @@ ERROR_CODE_TO_ERROR_DESCRIPTION: Final = {
         "Edge sensor error",
         "Edge sensor error. Please check and clean it.",
     ],
-    DreameMowerErrorCode.LASER: [
-        "Water is detected on the lidar. Rain protection is activated.",
-        "Return to the station.",
+    DreameMowerErrorCode.WATER_ON_LIDAR: [
+        "Water is detected on the lidar."
     ],
     DreameMowerErrorCode.EDGE_2: [
         "Edge sensor error",

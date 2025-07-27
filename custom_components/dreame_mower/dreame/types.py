@@ -224,7 +224,7 @@ class DreameMowerErrorCode(IntEnum):
     LDS_BUMPER = 49
     FILTER_BLOCKED = 51
     EDGE = 54
-    LASER = 56
+    WATER_ON_LIDAR = 56
     EDGE_2 = 57
     ULTRASONIC = 58
     NO_GO_ZONE = 59

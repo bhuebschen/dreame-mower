@@ -441,7 +441,7 @@
           "filter_blocked": "The filter not dry or blocked",
           "edge": "Edge sensor error",
           "carpet": "Please start the robot in non-carpet area.",
-          "laser": "The 3D obstacle avoidance sensor is malfunctioning.",
+          "water_on_lidar": "Water is detected on the lidar.",
           "ultrasonic": "The ultrasonic sensor is malfunctioning.",
           "no_go_zone": "No-Go zone or virtual wall detected.",
           "route": "Cleanup route is blocked.",
