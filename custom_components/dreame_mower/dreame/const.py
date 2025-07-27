@@ -200,8 +200,9 @@ ERROR_AUTO_KEY_TRIG: Final = "auto_key_trig"
 ERROR_P3V3: Final = "p3v3"
 ERROR_CAMERA_IDLE: Final = "camera_idle"
 ERROR_BLOCKED: Final = "blocked"
-ERROR_LDS_ERROR: Final = "lds_error"
+ERROR_MOWING_COMPLETED: Final = "mowing_completed"
 ERROR_LDS_BUMPER: Final = "lds_bumper"
+ERROR_MOWING_STARTED: Final = "mowing_started"
 ERROR_FILTER_BLOCKED: Final = "filter_blocked"
 ERROR_EDGE: Final = "edge"
 ERROR_WATER_ON_LIDAR: Final = "water_on_lidar"
@@ -716,8 +717,9 @@ ERROR_CODE_TO_ERROR_NAME: Final = {
     DreameMowerErrorCode.P3V3: ERROR_P3V3,
     DreameMowerErrorCode.CAMERA_IDLE: ERROR_CAMERA_IDLE,
     DreameMowerErrorCode.BLOCKED: ERROR_BLOCKED,
-    DreameMowerErrorCode.LDS_ERROR: ERROR_LDS_ERROR,
+    DreameMowerErrorCode.MOWING_COMPLETED: ERROR_MOWING_COMPLETED,
     DreameMowerErrorCode.LDS_BUMPER: ERROR_LDS_BUMPER,
+    DreameMowerErrorCode.MOWING_STARTED: ERROR_MOWING_STARTED,
     DreameMowerErrorCode.FILTER_BLOCKED: ERROR_FILTER_BLOCKED,
     DreameMowerErrorCode.EDGE: ERROR_EDGE,
     DreameMowerErrorCode.WATER_ON_LIDAR: ERROR_WATER_ON_LIDAR,
@@ -819,8 +821,9 @@ ERROR_CODE_TO_IMAGE_INDEX: Final = {
     DreameMowerErrorCode.BATTERY_LOW: 20,
     DreameMowerErrorCode.BATTERY_FAULT: 29,
     DreameMowerErrorCode.INFRARED_FAULT: 39,
-    DreameMowerErrorCode.LDS_ERROR: 48,
+    DreameMowerErrorCode.MOWING_COMPLETED: 48,
     DreameMowerErrorCode.LDS_BUMPER: 49,
+    DreameMowerErrorCode.MOWING_STARTED: 50,
     DreameMowerErrorCode.EDGE: 54,
     DreameMowerErrorCode.EDGE_2: 54,
     DreameMowerErrorCode.ULTRASONIC: 58,
@@ -1006,13 +1009,15 @@ ERROR_CODE_TO_ERROR_DESCRIPTION: Final = {
         "The robot may be blocked or stuck.",
         "Cleanup route is blocked, returning to the dock.",
     ],
-    DreameMowerErrorCode.LDS_ERROR: [
-        "Laser distance sensor error",
-        "Please check whether the laser distance sensor has any jammed items",
+    DreameMowerErrorCode.MOWING_COMPLETED: [
+        "Mowing completed.",
     ],
     DreameMowerErrorCode.LDS_BUMPER: [
         "Laser distance sensor bumper error",
         "Please check whether the laser distance sensor bumper is jammed",
+    ],
+    DreameMowerErrorCode.MOWING_STARTED: [
+        "Mowing started.",
     ],
     DreameMowerErrorCode.FILTER_BLOCKED: [
         "The filter not dry or blocked",

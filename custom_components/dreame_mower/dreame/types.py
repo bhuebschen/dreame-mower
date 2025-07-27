@@ -220,8 +220,9 @@ class DreameMowerErrorCode(IntEnum):
     P3V3 = 45
     CAMERA_IDLE = 46
     BLOCKED = 47
-    LDS_ERROR = 48
+    MOWING_COMPLETED = 48
     LDS_BUMPER = 49
+    MOWING_STARTED = 50
     FILTER_BLOCKED = 51
     EDGE = 54
     WATER_ON_LIDAR = 56

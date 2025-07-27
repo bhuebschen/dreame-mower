@@ -652,7 +652,7 @@ class DreameMowerDevice:
     def _task_status_changed(self, previous_task_status: Any = None) -> None:
         """Task status is a very important property and must be listened to trigger necessary actions when a task started or ended"""
         task_status = self.get_property(DreameMowerProperty.TASK_STATUS)
-        LOGGER.info("DreameMowerDevice._task_status_changed: %s", task_status)
+        _LOGGER.info("DreameMowerDevice._task_status_changed: %s", task_status)
 
         if previous_task_status is not None:
             if previous_task_status in DreameMowerTaskStatus._value2member_map_:
@@ -797,7 +797,7 @@ class DreameMowerDevice:
 
     def _status_changed(self, previous_status: Any = None) -> None:
         status = self.get_property(DreameMowerProperty.STATUS)
-        LOGGER.info("DreameMowerDevice._status_changed: %s", status)
+        _LOGGER.info("DreameMowerDevice._status_changed: %s", status)
 
         if previous_status is not None:
             if previous_status in DreameMowerStatus._value2member_map_:
@@ -1126,7 +1126,7 @@ class DreameMowerDevice:
 
     def _error_changed(self, previous_error: Any = None) -> None:
         error = self.get_property(DreameMowerProperty.ERROR)
-        LOGGER.error("DreameMowerDevice._error_changed: %s", error)
+        _LOGGER.error("DreameMowerDevice._error_changed: %s", error)
 
         if (
             previous_error is not None
@@ -4993,6 +4993,8 @@ class DreameMowerDeviceStatus:
                 value == DreameMowerErrorCode.LOW_BATTERY_TURN_OFF.value
                 or value == DreameMowerErrorCode.UNKNOWN_WARNING_2.value
                 or value == DreameMowerErrorCode.WATER_ON_LIDAR.value
+                or value == DreameMowerErrorCode.MOWING_COMPLETED.value
+                or value == DreameMowerErrorCode.MOWING_STARTED.value
             ):
                 return DreameMowerErrorCode.NO_ERROR
             return DreameMowerErrorCode(value)
