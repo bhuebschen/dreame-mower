@@ -184,8 +184,8 @@ ERROR_INFRARED_SHIELDING: Final = "infrared_shielding"
 ERROR_CHARGE_NO_ELECTRIC: Final = "charge_no_electric"
 ERROR_BATTERY_FAULT: Final = "battery_fault"
 ERROR_FAN_SPEED_ERROR: Final = "fan_speed_error"
-ERROR_LEFTWHELL_SPEED: Final = "left_wheell_speed"
-ERROR_RIGHTWHELL_SPEED: Final = "right_wheell_speed"
+ERROR_LEFTWHEEL_SPEED: Final = "left_wheel_speed"
+ERROR_RIGHTWHEEL_SPEED: Final = "right_wheel_speed"
 ERROR_BMI055_ACCE: Final = "bmi055_acce"
 ERROR_BMI055_GYRO: Final = "bmi055_gyro"
 ERROR_XV7001: Final = "xv7001"
@@ -700,8 +700,8 @@ ERROR_CODE_TO_ERROR_NAME: Final = {
     DreameMowerErrorCode.CHARGE_NO_ELECTRIC: ERROR_CHARGE_NO_ELECTRIC,
     DreameMowerErrorCode.BATTERY_FAULT: ERROR_BATTERY_FAULT,
     DreameMowerErrorCode.FAN_SPEED_ERROR: ERROR_FAN_SPEED_ERROR,
-    DreameMowerErrorCode.LEFTWHELL_SPEED: ERROR_LEFTWHELL_SPEED,
-    DreameMowerErrorCode.RIGHTWHELL_SPEED: ERROR_RIGHTWHELL_SPEED,
+    DreameMowerErrorCode.LEFTWHEEL_SPEED: ERROR_LEFTWHEEL_SPEED,
+    DreameMowerErrorCode.RIGHTWHEEL_SPEED: ERROR_RIGHTWHEEL_SPEED,
     DreameMowerErrorCode.BMI055_ACCE: ERROR_BMI055_ACCE,
     DreameMowerErrorCode.BMI055_GYRO: ERROR_BMI055_GYRO,
     DreameMowerErrorCode.XV7001: ERROR_XV7001,
@@ -809,8 +809,8 @@ ERROR_CODE_TO_IMAGE_INDEX: Final = {
     DreameMowerErrorCode.SIDE_BRUSH: 5,
     DreameMowerErrorCode.LEFT_WHEEL_MOTOR: 6,
     DreameMowerErrorCode.RIGHT_WHEEL_MOTOR: 6,
-    DreameMowerErrorCode.LEFTWHELL_SPEED: 6,
-    DreameMowerErrorCode.RIGHTWHELL_SPEED: 6,
+    DreameMowerErrorCode.LEFTWHEEL_SPEED: 6,
+    DreameMowerErrorCode.RIGHTWHEEL_SPEED: 6,
     DreameMowerErrorCode.TURN_SUFFOCATE: 7,
     DreameMowerErrorCode.FORWARD_SUFFOCATE: 7,
     DreameMowerErrorCode.FILTER_BLOCKED: 9,
@@ -945,11 +945,11 @@ ERROR_CODE_TO_ERROR_DESCRIPTION: Final = {
         "Fan speed sensor error",
         "Please try to restart the mower-mop.",
     ],
-    DreameMowerErrorCode.LEFTWHELL_SPEED: [
+    DreameMowerErrorCode.LEFTWHEEL_SPEED: [
         "Left wheel may be blocked by foreign objects",
         "Check whether there is any object stuck in the main wheels and start the robot in a new position.",
     ],
-    DreameMowerErrorCode.RIGHTWHELL_SPEED: [
+    DreameMowerErrorCode.RIGHTWHEEL_SPEED: [
         "Right wheel may be blocked by foreign objects",
         "Check whether there is any object stuck in the main wheels and start the robot in a new position.",
     ],
@@ -1023,8 +1023,8 @@ ERROR_CODE_TO_ERROR_DESCRIPTION: Final = {
         "Edge sensor error. Please check and clean it.",
     ],
     DreameMowerErrorCode.LASER: [
-        "The 3D obstacle avoidance sensor is malfunctioning.",
-        "Please try to clean the 3D obstacle avoidance sensor.",
+        "Water is detected on the lidar. Rain protection is activated.",
+        "Return to the station.",
     ],
     DreameMowerErrorCode.EDGE_2: [
         "Edge sensor error",

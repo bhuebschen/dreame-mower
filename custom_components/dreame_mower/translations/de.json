@@ -441,7 +441,7 @@
           "filter_blocked": "Der Filter ist feucht oder verstopft",
           "edge": "Kantensensor Fehler",
           "carpet": "Bitte den Roboter in einem Bereich ohne Teppich starten.",
-          "laser": "Der 3D-Hindernisvermeidungssensor ist defekt.",
+          "laser": "Wasser wird auf dem Lidar erkannt. Der Regenschutz ist aktiviert. Zur Station zurückkehren.",
           "ultrasonic": "Der Ultraschallsensor ist gestört.",
           "no_go_zone": "No-Go-Zone oder virtuelle Wand erkannt.",
           "route": "Die Reinigungsroute ist blockiert.",
