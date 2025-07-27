@@ -479,9 +479,6 @@ class DreameMowerCameraEntity(DreameMowerEntity, Camera):
         self._device_active = None
         self._error = None
         self._proxy_renderer = None
-        self._webrtc_provider = None
-        self._webrtc_provider = None
-        self._supports_native_async_webrtc = False
 
         if description.map_type == DreameMowerMapType.JSON_MAP_DATA:
             self._renderer = DreameMowerMapDataJsonRenderer()
