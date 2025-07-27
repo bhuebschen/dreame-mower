@@ -70,7 +70,7 @@ class DreameMowerOptionsFlowHandler(OptionsFlow):
 
     def __init__(self, config_entry: ConfigEntry) -> None:
         """Initialize Dreame Mower options flow."""
-        self.config_entry = config_entry
+        super().__init__()
 
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
@@ -158,6 +158,7 @@ class DreameMowerFlowHandler(ConfigFlow, domain=DOMAIN):
         self.square: bool = False
         self.devices: dict[str, dict[str, Any]] = {}
         self.protocol: DreameMowerProtocol | None = None
+        super().__init__()
 
     @staticmethod
     @callback
