@@ -249,6 +249,7 @@ class DreameMowerDreameHomeCloudProtocol:
                         try:
                             host = self._host.split(":")
                             self._client = mqtt_client.Client(
+                                mqtt_client.CallbackAPIVersion.VERSION1,
                                 f"{self._strings[53]}{self._uid}{self._strings[54]}{DreameMowerDreameHomeCloudProtocol.get_random_agent_id()}{self._strings[54]}{host[0]}",
                                 clean_session=True,
                                 userdata=self,
