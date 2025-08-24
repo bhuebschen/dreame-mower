@@ -659,6 +659,7 @@ class DreameMower(DreameMowerEntity, LawnMowerEntity):
 
     async def async_return_to_base(self, **kwargs) -> None:
         """Set the mower cleaner to return to the dock."""
+        await self._try_command("Unable to call stop: %s", self.device.stop)
         await self._try_command("Unable to call return_to_base: %s", self.device.return_to_base)
 
     async def async_dock(self, **kwargs) -> None:
@@ -928,3 +929,4 @@ class DreameMower(DreameMowerEntity, LawnMowerEntity):
                 x,
                 y,
             )
+
