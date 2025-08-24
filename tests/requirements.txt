@@ -1,0 +1,5 @@
+pytest-homeassistant-custom-component==0.13.205
+python-miio==0.5.12
+pycryptodome==3.23.0
+pytest-mock==3.14.1
+PyTurboJPEG==1.8.2
