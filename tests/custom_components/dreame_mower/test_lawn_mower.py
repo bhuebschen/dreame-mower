@@ -80,11 +80,11 @@ def test_icon_logic(mower):
     mower._set_attrs()
     assert mower._attr_icon == "mdi:lightning-bolt-circle"
 
-    # Docked icon
+    # Docked but not charging: default icon
     mower.device.status.charging = False
     mower.device.status.docked = True
     mower._set_attrs()
-    assert mower._attr_icon == "mdi:ev-station"
+    assert mower._attr_icon == "mdi:robot-mower"
 
     # Cruising icon
     mower.device.status.docked = False

@@ -567,7 +567,11 @@ class DreameMower(DreameMowerEntity, LawnMowerEntity):
         elif self.device.status.charging:
             self._attr_icon = "mdi:lightning-bolt-circle"
         elif self.device.status.docked:
-            self._attr_icon = "mdi:ev-station"
+            # If docked but not charging, use default icon
+            if not self.device.status.charging:
+                self._attr_icon = "mdi:robot-mower"
+            else:
+                self._attr_icon = "mdi:lightning-bolt-circle"
         elif self.device.status.cruising:
             self._attr_icon = "mdi:map-marker-path"
         else:
