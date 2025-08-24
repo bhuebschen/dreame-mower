@@ -2,7 +2,7 @@
 
 # Dreame/MOVA lawn mower integration for Home Assistant
 
-[![GitHub Release](https://img.shields.io/github/v/release/bhuebschen/dreame-mower?style=flat-square)](https://github.com/bhuebschen/dreame-mower/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/antondaubert/dreame-mower?style=flat-square)](https://github.com/antondaubert/dreame-mower/releases)
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg?style=flat-square)](https://hacs.xyz/)
 
 This is a custom integration for Home Assistant that allows you to control your Dreame lawn mower robot
@@ -12,8 +12,8 @@ This is a custom integration for Home Assistant that allows you to control your 
 - Start/Stop mowing.
 - Send back to home.
 
+### Please note: this is a modified version of Benedikt Hübschen's "Dreame Mower" to continue some active development, at least for seom time.
 ### Please note: this is a modified version of Tasshack's "Dreame Vacuum" integration to work with the lawn mower, in this state it may causes a lot of error-messages.
-
 ### If you are interested in the (original) Vacuum-integration, please take a look at: https://github.com/Tasshack/dreame-vacuum
 
 ## Installation
@@ -22,7 +22,7 @@ This is a custom integration for Home Assistant that allows you to control your 
 
 1. Ensure that [HACS](https://hacs.xyz/) is installed in your Home Assistant instance.
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=bhuebschen&repository=dreame-mower&category=integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=antondaubert&repository=dreame-mower&category=integration)
 
 -- or --
 
@@ -30,13 +30,13 @@ This is a custom integration for Home Assistant that allows you to control your 
    - Open HACS in Home Assistant.
    - Go to **Integrations**.
    - Click on the three dots in the top-right corner and select **Custom repositories**.
-   - Add the following URL: `https://github.com/bhuebschen/dreame-mower`.
+   - Add the following URL: `https://github.com/antondaubert/dreame-mower`.
    - Select **Integration** as the category.
 3. Search for "Dreame Mower" in the HACS integrations list and install it.
 
 ### Manual Installation
 
-1. Download the latest release from the [GitHub Releases page](https://github.com/bhuebschen/dreame-mower/releases).
+1. Download the latest release from the [GitHub Releases page](https://github.com/antondaubert/dreame-mower/releases).
 2. Extract the downloaded archive.
 3. Copy the `custom_components/dreame-mower` folder to your Home Assistant `custom_components` directory.
    - Example: `/config/custom_components/dreame-mower`
@@ -65,7 +65,7 @@ Once the integration is configured, your Dreame/MOVA Mower(s) will appear as ent
 
 ## Support
 
-If you encounter any issues or have feature requests, please open an issue on the [GitHub Issues page](https://github.com/bhuebschen/dreame-mower/issues).
+If you encounter any issues or have feature requests, please open an issue on the [GitHub Issues page](https://github.com/antondaubert/dreame-mower/issues).
 
 ## Contributions
 
@@ -73,12 +73,9 @@ Contributions are welcome! Feel free to submit pull requests to improve this int
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/bhuebschen/dreame-mower/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/antondaubert/dreame-mower/blob/main/LICENSE) file for details.
 
 # Thanks / Contributors
 
-- [Tasshack](https://github.com/Tasshack)
-- [Laurentiu Tanase](https://github.com/larieu)
+- [Aaroneisele55](https://github.com/Aaroneisele55)
 - [Josef Kyrian](https://github.com/josef-kyrian)
-- [Anton Daubert](https://github.com/antondaubert)
-- [Loïc](https://github.com/zoic21)
