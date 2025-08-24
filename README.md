@@ -9,12 +9,12 @@ This is a custom integration for Home Assistant that allows you to control your 
 
 ## (current) Features
 
-- Start/Stop mowing.
+- Start/Pause/Stop mowing.
 - Send back to home.
+- Battery status.
 
-### Please note: this is a modified version of Benedikt Hübschen's "Dreame Mower" to continue some active development, at least for seom time.
-### Please note: this is a modified version of Tasshack's "Dreame Vacuum" integration to work with the lawn mower, in this state it may causes a lot of error-messages.
-### If you are interested in the (original) Vacuum-integration, please take a look at: https://github.com/Tasshack/dreame-vacuum
+### Please note: this is a modified version of Benedikt Hübschen's "Dreame Mower" to continue some active development, at least for some time.
+### If you are interested in the original integration, please take a look at: https://github.com/bhuebschen/dreame-mower
 
 ## Installation
 
