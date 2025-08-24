@@ -560,9 +560,7 @@ class DreameMower(DreameMowerEntity, LawnMowerEntity):
     def _set_attrs(self):
         if self.device.status.has_error:
             self._attr_icon = "mdi:alert-octagon"
-        elif (
-            self.device.status.paused
-        ):
+        elif self.device.status.paused:
             self._attr_icon = "mdi:pause-circle"
         elif self.device.status.sleeping:
             self._attr_icon = "mdi:sleep"
