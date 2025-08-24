@@ -315,7 +315,7 @@ class DreameMowerTaskStatus(IntEnum):
 
     UNKNOWN = -1
     COMPLETED = 0
-    AUTO_CLEANING = 1
+    MOWING = 1
     ZONE_CLEANING = 2
     SEGMENT_CLEANING = 3
     SPOT_CLEANING = 4

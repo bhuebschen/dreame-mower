@@ -671,7 +671,7 @@ class DreameMowerDevice:
                 # Update map data for renderer to update the map image according to the new task status
                 if previous_task_status is DreameMowerTaskStatus.COMPLETED:
                     if (
-                        task_status is DreameMowerTaskStatus.AUTO_CLEANING
+                        task_status is DreameMowerTaskStatus.MOWING
                         or task_status is DreameMowerTaskStatus.ZONE_CLEANING
                         or task_status is DreameMowerTaskStatus.SEGMENT_CLEANING
                         or task_status is DreameMowerTaskStatus.SPOT_CLEANING
@@ -2660,7 +2660,7 @@ class DreameMowerDevice:
 
         if not self.status.started:
             self._update_status(
-                DreameMowerTaskStatus.AUTO_CLEANING, DreameMowerStatus.CLEANING
+                DreameMowerTaskStatus.MOWING, DreameMowerStatus.CLEANING
             )
         elif (
             self.status.paused
@@ -2701,7 +2701,7 @@ class DreameMowerDevice:
 
         if not self.status.started:
             self._update_status(
-                DreameMowerTaskStatus.AUTO_CLEANING, DreameMowerStatus.CLEANING
+                DreameMowerTaskStatus.MOWING, DreameMowerStatus.CLEANING
             )
         elif (
             self.status.paused
@@ -3280,7 +3280,7 @@ class DreameMowerDevice:
         self.schedule_update(10, True)
         if self._map_manager:
             self._update_status(
-                DreameMowerTaskStatus.AUTO_CLEANING, DreameMowerStatus.CLEANING
+                DreameMowerTaskStatus.MOWING, DreameMowerStatus.CLEANING
             )
             self._map_manager.editor.reset_map()
 
@@ -5177,7 +5177,7 @@ class DreameMowerDeviceStatus:
             self._device_connected
             and self.started
             and (
-                task_status is DreameMowerTaskStatus.AUTO_CLEANING
+                task_status is DreameMowerTaskStatus.MOWING
                 or task_status is DreameMowerTaskStatus.AUTO_CLEANING_PAUSED
                 or task_status is DreameMowerTaskStatus.AUTO_DOCKING_PAUSED
             )
