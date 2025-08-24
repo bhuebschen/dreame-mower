@@ -78,4 +78,3 @@ This project is licensed under the MIT License. See the [LICENSE](https://github
 # Thanks / Contributors
 
 - [Aaroneisele55](https://github.com/Aaroneisele55)
-- [Josef Kyrian](https://github.com/josef-kyrian)
