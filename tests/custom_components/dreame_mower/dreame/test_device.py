@@ -75,8 +75,8 @@ def test_start_mowing(device: DreameMowerDevice, mocker):
     # Assert that call_action was called with the correct action
     mock_call_action.assert_called_once_with(DreameMowerAction.START_MOWING)
 
-def test_stop_mowing(device: DreameMowerDevice, mocker):
-    """Test stopping a mowing task."""
+def test_stop_and_state_update(device: DreameMowerDevice, mocker):
+    """Test stopping a mowing task and the subsequent state update."""
     # Mock the call_action method to prevent actual network calls
     mock_call_action = mocker.patch.object(device, "call_action", return_value={"code": 0})
 
@@ -84,34 +84,22 @@ def test_stop_mowing(device: DreameMowerDevice, mocker):
     device.data[DreameMowerProperty.STATUS.value] = DreameMowerStatus.CLEANING.value
     device.data[DreameMowerProperty.TASK_STATUS.value] = DreameMowerTaskStatus.MOWING.value
     device.data[DreameMowerProperty.STATE.value] = DreameMowerState.MOWING.value
+    device.data[DreameMowerProperty.CLEANING_PAUSED.value] = False
 
     # Call the method to test
     device.stop()
 
-    # Assert that status properties were updated optimistically
+    # Assert that status properties were updated optimistically right after calling stop()
     assert device.data[DreameMowerProperty.STATUS.value] == DreameMowerStatus.STANDBY.value
     assert device.data[DreameMowerProperty.TASK_STATUS.value] == DreameMowerTaskStatus.COMPLETED.value
 
     # The 'state' property is not updated optimistically on stop.
     # It will be updated to IDLE upon receiving the next status update from the device.
-    # We assert that it remains MOWING immediately after the command.
+    # We assert that it remains MOWING immediately after the command for now.
     assert device.data[DreameMowerProperty.STATE.value] == DreameMowerState.MOWING.value
 
     # Assert that call_action was called with the correct action
     mock_call_action.assert_called_once_with(DreameMowerAction.STOP)
-
-def test_state_update_after_stop(device: DreameMowerDevice, mocker):
-    """Test that the device state is updated after stopping."""
-    # Mock the call_action method to prevent actual network calls
-    mocker.patch.object(device, "call_action", return_value={"code": 0})
-
-    # Set initial state to mowing
-    device.data[DreameMowerProperty.STATUS.value] = DreameMowerStatus.CLEANING.value
-    device.data[DreameMowerProperty.TASK_STATUS.value] = DreameMowerTaskStatus.MOWING.value
-    device.data[DreameMowerProperty.STATE.value] = DreameMowerState.MOWING.value
-
-    # Call the method to test
-    device.stop()
 
     # Simulate a property update from the device, which happens after the stop command is processed.
     # The device should now report being idle.
@@ -132,8 +120,6 @@ def test_state_update_after_stop(device: DreameMowerDevice, mocker):
 
     # Ensure the device is ready to process messages
     device._ready = True
-    # Manually trigger the message handler to simulate the update. This method is
-    # the callback that processes incoming messages from the protocol layer.
     device._message_callback({"method": "properties_changed", "params": update_payload})
 
     # Assert that the state is now updated
