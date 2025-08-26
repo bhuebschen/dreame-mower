@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import voluptuous as vol
 from typing import Final
+import logging
+import asyncio
 
 from .coordinator import DreameMowerDataUpdateCoordinator
 from .entity import DreameMowerEntity
@@ -104,6 +106,8 @@ from .const import (
     CONSUMABLE_SQUEEGEE,
 )
 
+_LOGGER = logging.getLogger(__name__)
+
 SUPPORT_DREAME = (
     LawnMowerEntityFeature.START_MOWING
     | LawnMowerEntityFeature.PAUSE
@@ -113,7 +117,7 @@ SUPPORT_DREAME = (
 STATE_CODE_TO_STATE: Final = {
     DreameMowerState.UNKNOWN: STATE_UNKNOWN,
     DreameMowerState.MOWING: LawnMowerActivity.MOWING,
-    DreameMowerState.IDLE: LawnMowerActivity.DOCKED,
+    DreameMowerState.IDLE: LawnMowerActivity.PAUSED,
     DreameMowerState.PAUSED: LawnMowerActivity.PAUSED,
     DreameMowerState.ERROR: LawnMowerActivity.ERROR,
     DreameMowerState.RETURNING: LawnMowerActivity.MOWING,
@@ -659,14 +663,30 @@ class DreameMower(DreameMowerEntity, LawnMowerEntity):
         """Pause the cleaning task."""
         await self._try_command("Unable to call pause: %s", self.device.pause)
 
-    async def async_return_to_base(self, **kwargs) -> None:
-        """Set the mower cleaner to return to the dock."""
-        await self._try_command("Unable to call stop: %s", self.device.stop)
-        await self._try_command("Unable to call return_to_base: %s", self.device.return_to_base)
-
     async def async_dock(self, **kwargs) -> None:
-        """Set the mower cleaner to return to the dock."""
-        await self._try_command("Unable to call return_to_base: %s", self.device.dock)
+        """Stop the mower if it's active, wait for it to stop, then send it to the dock."""
+        if ACTION_AVAILABILITY[DreameMowerAction.STOP.name](self.device):
+            await self._try_command("Unable to call stop: %s", self.device.stop)
+
+            try:
+                # Poll for up to 20 seconds for the mower to exit the mowing state.
+                async with asyncio.timeout(20):
+                    while True:
+                        # Manually trigger a data refresh from the device.
+                        await self.coordinator.async_request_refresh()
+
+                        # Check if the device is still in a mowing-related state.
+                        current_activity = STATE_CODE_TO_STATE.get(self.device.status.state)
+                        if current_activity != LawnMowerActivity.MOWING:
+                            break  # Exit loop once stopped
+
+                        await asyncio.sleep(2)  # Poll every 2 seconds to reduce requests
+            except TimeoutError:
+                _LOGGER.warning(
+                    "Timed out waiting for mower to stop. Proceeding with dock anyway."
+                )
+
+        await self._try_command("Unable to call dock: %s", self.device.dock)
 
     async def async_clean_zone(self, zone, repeats=1) -> None:
         await self._try_command(
