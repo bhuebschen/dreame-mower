@@ -1126,7 +1126,7 @@ class DreameMowerDevice:
 
     def _error_changed(self, previous_error: Any = None) -> None:
         error = self.get_property(DreameMowerProperty.ERROR)
-        _LOGGER.error("DreameMowerDevice._error_changed: %s", error)
+        _LOGGER.info("DreameMowerDevice._error_changed: %s", error)
 
         if (
             previous_error is not None
