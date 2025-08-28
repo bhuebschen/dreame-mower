@@ -4996,6 +4996,8 @@ class DreameMowerDeviceStatus:
                 or value == DreameMowerErrorCode.WATER_ON_LIDAR.value
                 or value == DreameMowerErrorCode.MOWING_COMPLETED.value
                 or value == DreameMowerErrorCode.MOWING_STARTED.value
+                or value == DreameMowerErrorCode.DND_START.value
+                or value == DreameMowerErrorCode.DND_END.value
             ):
                 return DreameMowerErrorCode.NO_ERROR
             return DreameMowerErrorCode(value)

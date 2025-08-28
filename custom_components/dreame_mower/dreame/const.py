@@ -208,7 +208,9 @@ ERROR_EDGE: Final = "edge"
 ERROR_WATER_ON_LIDAR: Final = "water_on_lidar"
 ERROR_ULTRASONIC: Final = "ultrasonic"
 ERROR_NO_GO_ZONE: Final = "no_go_zone"
-ERROR_ROUTE: Final = "route"
+ERROR_DND_START: Final = "dnd_start"
+ERROR_ROUTE_2: Final = "route_2"
+ERROR_DND_END: Final = "dnd_end"
 ERROR_RESTRICTED: Final = "restricted"
 ERROR_LOW_BATTERY_TURN_OFF: Final = "low_battery_turn_off"
 ERROR_ROBOT_IN_HIDDEN_ZONE: Final = "robot_in_hidden_zone"
@@ -726,13 +728,14 @@ ERROR_CODE_TO_ERROR_NAME: Final = {
     DreameMowerErrorCode.EDGE_2: ERROR_EDGE,
     DreameMowerErrorCode.ULTRASONIC: ERROR_ULTRASONIC,
     DreameMowerErrorCode.NO_GO_ZONE: ERROR_NO_GO_ZONE,
-    DreameMowerErrorCode.ROUTE: ERROR_ROUTE,
-    DreameMowerErrorCode.ROUTE_2: ERROR_ROUTE,
+    DreameMowerErrorCode.DND_START: ERROR_DND_START,
+    DreameMowerErrorCode.ROUTE_2: ERROR_ROUTE_2,
     DreameMowerErrorCode.BLOCKED_2: ERROR_BLOCKED,
     DreameMowerErrorCode.BLOCKED_3: ERROR_BLOCKED,
     DreameMowerErrorCode.RESTRICTED: ERROR_RESTRICTED,
     DreameMowerErrorCode.RESTRICTED_2: ERROR_RESTRICTED,
     DreameMowerErrorCode.RESTRICTED_3: ERROR_RESTRICTED,
+    DreameMowerErrorCode.DND_END: ERROR_DND_END,
     DreameMowerErrorCode.LOW_BATTERY_TURN_OFF: ERROR_LOW_BATTERY_TURN_OFF,
     DreameMowerErrorCode.ROBOT_IN_HIDDEN_ZONE: ERROR_ROBOT_IN_HIDDEN_ZONE,
     DreameMowerErrorCode.STATION_DISCONNECTED: ERROR_STATION_DISCONNECTED,
@@ -827,7 +830,7 @@ ERROR_CODE_TO_IMAGE_INDEX: Final = {
     DreameMowerErrorCode.EDGE: 54,
     DreameMowerErrorCode.EDGE_2: 54,
     DreameMowerErrorCode.ULTRASONIC: 58,
-    DreameMowerErrorCode.ROUTE: 61,
+    DreameMowerErrorCode.DND_START: 61,
     DreameMowerErrorCode.ROUTE_2: 62,
     DreameMowerErrorCode.BLOCKED: 63,
     DreameMowerErrorCode.BLOCKED_2: 63,
@@ -835,6 +838,7 @@ ERROR_CODE_TO_IMAGE_INDEX: Final = {
     DreameMowerErrorCode.RESTRICTED: 65,
     DreameMowerErrorCode.RESTRICTED_2: 65,
     DreameMowerErrorCode.RESTRICTED_3: 65,
+    DreameMowerErrorCode.DND_END: 70,
     DreameMowerErrorCode.STATION_DISCONNECTED: 117,
     DreameMowerErrorCode.SELF_TEST_FAILED: 999,
     DreameMowerErrorCode.RETURN_TO_CHARGE_FAILED: 1000,
@@ -1042,9 +1046,8 @@ ERROR_CODE_TO_ERROR_DESCRIPTION: Final = {
         "No-Go zone or virtual wall detected.",
         "Please move the robot away from the area and restart.",
     ],
-    DreameMowerErrorCode.ROUTE: [
-        "Unable to reach the specified area.",
-        "Please ensure that all doors in the home are open and clear any obstacles along the path.",
+    DreameMowerErrorCode.DND_START: [
+        "DND started.",
     ],
     DreameMowerErrorCode.ROUTE_2: [
         "Unable to reach the specified area.",
@@ -1069,6 +1072,9 @@ ERROR_CODE_TO_ERROR_DESCRIPTION: Final = {
     DreameMowerErrorCode.RESTRICTED_3: [
         "Detected that the mower-mop is in a restricted area.",
         "Please move the mower-mop out of this area.",
+    ],
+    DreameMowerErrorCode.DND_END: [
+        "DND ended.",
     ],
     DreameMowerErrorCode.LOW_BATTERY_TURN_OFF: [
         "Low battery. Robot will shut down soon.",

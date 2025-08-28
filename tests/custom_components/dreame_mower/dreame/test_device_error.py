@@ -59,6 +59,8 @@ def test_other_error_codes_flagged_as_error():
         DreameMowerErrorCode.WATER_ON_LIDAR,
         DreameMowerErrorCode.MOWING_COMPLETED,
         DreameMowerErrorCode.MOWING_STARTED,
+        DreameMowerErrorCode.DND_START,
+        DreameMowerErrorCode.DND_END,
     }
     warnings = {
         DreameMowerErrorCode.BLOCKED,
