@@ -5006,8 +5006,11 @@ class DreameMowerDeviceStatus:
     @property
     def error_name(self) -> str:
         """Return error as string for translation."""
-        if not self.has_error and not self.has_warning:
-            return ERROR_CODE_TO_ERROR_NAME.get(DreameMowerErrorCode.NO_ERROR)
+        # Always surface the underlying error code mapping, even if it's not classified
+        # as a "blocking" error (has_error False) or a warning. The suppression of
+        # informational codes (e.g. mowing started/completed) is already handled in
+        # the error property itself by remapping them to NO_ERROR. This keeps
+        # telemetry (like BATTERY_LOW or UNKNOWN codes) visible for diagnostics.
         return ERROR_CODE_TO_ERROR_NAME.get(self.error, STATE_UNKNOWN)
 
     @property
