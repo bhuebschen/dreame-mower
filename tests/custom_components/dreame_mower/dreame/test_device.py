@@ -5,6 +5,7 @@ from custom_components.dreame_mower.dreame.types import (
     DreameMowerTaskStatus,
     DreameMowerStatus,
     DreameMowerState,
+    DreameMowerStateOld,
     DreameMowerProperty,
 )
 from homeassistant.const import (
@@ -178,3 +179,92 @@ def test_pause(device: DreameMowerDevice, mocker):
 
     # Assert that call_action was called with the correct action
     mock_call_action.assert_called_once_with(DreameMowerAction.PAUSE)
+
+
+def test_update_property_no_change(device: DreameMowerDevice, mocker):
+    # Arrange
+    device.data[DreameMowerProperty.STATUS.value] = DreameMowerStatus.IDLE.value
+    prop_changed_spy = mocker.patch.object(device, "_property_changed")
+
+    # Act
+    result = device._update_property(DreameMowerProperty.STATUS, DreameMowerStatus.IDLE.value)
+
+    # Assert
+    assert result is None
+    prop_changed_spy.assert_not_called()
+    assert device.data[DreameMowerProperty.STATUS.value] == DreameMowerStatus.IDLE.value
+
+
+def test_update_property_initial_set(device: DreameMowerDevice, mocker):
+    # Arrange
+    prop_changed_spy = mocker.patch.object(device, "_property_changed")
+
+    # Act
+    result = device._update_property(DreameMowerProperty.STATUS, DreameMowerStatus.IDLE.value)
+
+    # Assert
+    assert result == DreameMowerStatus.IDLE.value  # returns new value when no previous value
+    prop_changed_spy.assert_called_once()
+    assert device.data[DreameMowerProperty.STATUS.value] == DreameMowerStatus.IDLE.value
+
+
+def test_update_property_changed_value(device: DreameMowerDevice, mocker):
+    # Arrange previous value
+    device.data[DreameMowerProperty.STATUS.value] = DreameMowerStatus.IDLE.value
+    prop_changed_spy = mocker.patch.object(device, "_property_changed")
+
+    # Act
+    result = device._update_property(DreameMowerProperty.STATUS, DreameMowerStatus.CLEANING.value)
+
+    # Assert
+    assert result == DreameMowerStatus.IDLE.value  # returns previous value
+    prop_changed_spy.assert_called_once()
+    assert device.data[DreameMowerProperty.STATUS.value] == DreameMowerStatus.CLEANING.value
+
+
+def test_update_property_callbacks(device: DreameMowerDevice, mocker):
+    # Arrange
+    captured = []
+
+    def _cb(prev):
+        captured.append(prev)
+
+    device.listen(_cb, DreameMowerProperty.STATUS)
+
+    # First set (no previous value)
+    device._update_property(DreameMowerProperty.STATUS, DreameMowerStatus.IDLE.value)
+    # Second update (previous value should be passed)
+    device._update_property(DreameMowerProperty.STATUS, DreameMowerStatus.CLEANING.value)
+
+    # Assert callback sequence
+    assert captured == [None, DreameMowerStatus.IDLE.value]
+    assert device.data[DreameMowerProperty.STATUS.value] == DreameMowerStatus.CLEANING.value
+
+
+def test_update_property_state_translation_when_new_state_disabled(device: DreameMowerDevice, mocker):
+    # Ensure capability.new_state is False (default)
+    assert device.capability.new_state is False
+    prop_changed_spy = mocker.patch.object(device, "_property_changed")
+
+    # Use a state value > 18 that exists in DreameMowerState (REMOTE_CONTROL = 23)
+    new_value = DreameMowerState.REMOTE_CONTROL.value
+    result = device._update_property(DreameMowerProperty.STATE, new_value)
+
+    # Should translate to old enum (REMOTE_CONTROL = 19 in DreameMowerStateOld)
+    assert device.data[DreameMowerProperty.STATE.value] == int(DreameMowerStateOld.REMOTE_CONTROL)
+    assert result == int(DreameMowerStateOld.REMOTE_CONTROL)
+    prop_changed_spy.assert_called_once()
+
+
+def test_update_property_state_no_translation_when_new_state_enabled(device: DreameMowerDevice, mocker):
+    # Enable new_state capability
+    device.capability.new_state = True
+    prop_changed_spy = mocker.patch.object(device, "_property_changed")
+
+    new_value = DreameMowerState.REMOTE_CONTROL.value
+    result = device._update_property(DreameMowerProperty.STATE, new_value)
+
+    # Should not translate
+    assert device.data[DreameMowerProperty.STATE.value] == new_value
+    assert result == new_value
+    prop_changed_spy.assert_called_once()
