@@ -665,25 +665,40 @@ class DreameMower(DreameMowerEntity, LawnMowerEntity):
 
     async def async_dock(self, **kwargs) -> None:
         """Stop the mower if it's active, wait for it to stop, then send it to the dock."""
-        if ACTION_AVAILABILITY[DreameMowerAction.STOP.name](self.device):
+
+        # Raw states considered active for stopping purposes.
+        active_states = {
+            DreameMowerState.MOWING,
+            DreameMowerState.SPOT_CLEANING,
+            DreameMowerState.SECOND_CLEANING,
+            DreameMowerState.SHORTCUT,
+            DreameMowerState.CLEAN_SUMMON,
+            DreameMowerState.MONITORING,
+        }
+
+        original_state = self.device.status.state
+
+        # If the raw state indicates activity, always issue a STOP first.
+        if original_state in active_states:
             await self._try_command("Unable to call stop: %s", self.device.stop)
 
+            # Give the firmware a brief head start before first poll
+            await asyncio.sleep(0.6)
             try:
                 # Poll for up to 20 seconds for the mower to exit the mowing state.
                 async with asyncio.timeout(20):
                     while True:
-                        # Manually trigger a data refresh from the device.
                         await self.coordinator.async_request_refresh()
+                        new_state = self.device.status.state
 
-                        # Check if the device is still in a mowing-related state.
-                        current_activity = STATE_CODE_TO_STATE.get(self.device.status.state)
-                        if current_activity != LawnMowerActivity.MOWING:
-                            break  # Exit loop once stopped
+                        if new_state != original_state and new_state not in active_states:
+                            break
 
                         await asyncio.sleep(2)  # Poll every 2 seconds to reduce requests
             except TimeoutError:
                 _LOGGER.warning(
-                    "Timed out waiting for mower to stop. Proceeding with dock anyway."
+                    "Stop stabilization timeout (state remained %s). Proceeding to dock.",
+                    original_state.name if isinstance(original_state, DreameMowerState) else original_state,
                 )
 
         await self._try_command("Unable to call dock: %s", self.device.dock)
