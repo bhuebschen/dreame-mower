@@ -1826,6 +1826,13 @@ class DreameMowerDevice:
             return render_map_data
         return map_data
 
+    @property
+    def vector_map(self):
+        """Get the current vector map data from the map manager."""
+        if self._map_manager:
+            return self._map_manager.vector_map
+        return None
+
     def get_map(self, map_index: int) -> MapData | None:
         """Get stored map data by index from map manager."""
         if self._map_manager:

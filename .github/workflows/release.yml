@@ -1,0 +1,22 @@
+name: Build release zip
+
+on:
+  release:
+    types: [created]
+
+permissions:
+  contents: write
+
+jobs:
+  build-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build dreame_mower.zip
+        run: cd custom_components/dreame_mower && zip -r ../../dreame_mower.zip . -x '__pycache__/*' '*.pyc'
+
+      - name: Upload zip to release
+        run: gh release upload "${{ github.event.release.tag_name }}" dreame_mower.zip
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -2852,3 +2852,65 @@ class MapRendererData:
     work_status: int = 0
     resources: MapRendererResources = None
     version: int = 1
+
+
+class MowerZone:
+    """A mowing zone defined by a polygon boundary."""
+    def __init__(self, zone_id: int, path: list, name: str = "", zone_type: int = 0,
+                 shape_type: int = 0, area: float = 0, time: int = 0, etime: int = 0) -> None:
+        self.zone_id = zone_id
+        self.path = path  # list of (x, y) tuples
+        self.name = name
+        self.zone_type = zone_type
+        self.shape_type = shape_type
+        self.area = area
+        self.time = time
+        self.etime = etime
+
+
+class MowerPath:
+    """A navigation path between zones."""
+    def __init__(self, path_id: int, path: list, path_type: int = 0) -> None:
+        self.path_id = path_id
+        self.path = path  # list of (x, y) tuples
+        self.path_type = path_type
+
+
+class MowerMapBoundary:
+    """Bounding box for the entire map."""
+    def __init__(self, x1: int, y1: int, x2: int, y2: int) -> None:
+        self.x1 = x1
+        self.y1 = y1
+        self.x2 = x2
+        self.y2 = y2
+
+    @property
+    def width(self) -> int:
+        return self.x2 - self.x1
+
+    @property
+    def height(self) -> int:
+        return self.y2 - self.y1
+
+
+class MowerMowPath:
+    """Mowing path trace for a zone — the actual trail the mower followed."""
+    def __init__(self, zone_id: int, segments: list) -> None:
+        self.zone_id = zone_id
+        self.segments = segments  # list of lists of (x, y) tuples, split on sentinel
+
+
+class MowerVectorMap:
+    """Complete vector map data for a mower, fetched from batch API."""
+    def __init__(self) -> None:
+        self.zones: list[MowerZone] = []
+        self.forbidden_areas: list[MowerZone] = []
+        self.paths: list[MowerPath] = []
+        self.contours: list = []
+        self.obstacles: list = []
+        self.boundary: MowerMapBoundary | None = None
+        self.total_area: float = 0
+        self.name: str = ""
+        self.map_index: int = 0
+        self.mow_paths: list[MowerMowPath] = []
+        self.last_updated: float | None = None

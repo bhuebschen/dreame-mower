@@ -36,9 +36,11 @@ from threading import Timer
 from .resources import *
 from .protocol import DreameMowerProtocol
 from .exceptions import DeviceUpdateFailedException
+from .map_data_parser import parse_batch_map_data
 from .types import (
     PIID,
     DIID,
+    MowerVectorMap,
     DreameMowerProperty,
     DreameMowerAction,
     DreameMowerActionMapping,
@@ -195,6 +197,63 @@ class DreameMapMowerMapManager:
         self._new_map_request_time: int = None
         self._aes_iv: str = None
         self._capability: DreameMowerDeviceCapability = None
+        self._vector_map: MowerVectorMap | None = None
+
+    @property
+    def vector_map(self) -> MowerVectorMap | None:
+        """Get the current vector map data (for mower polygon rendering)."""
+        return self._vector_map
+
+    def _fetch_vector_map_from_batch_api(self) -> bool:
+        """Fetch vector map data from the batch device data API.
+
+        Requests MAP.*, M_PATH.*, and SETTINGS.* keys from the cloud
+        batch API and parses them into a MowerVectorMap.
+
+        Returns:
+            True if map data was updated, False otherwise.
+        """
+        if not self._protocol.cloud or not self._protocol.cloud.logged_in:
+            return False
+
+        try:
+            # Build the list of keys to fetch
+            keys = []
+            # MAP chunks — request up to 40 (typical is 0-32)
+            for i in range(40):
+                keys.append(f"MAP.{i}")
+            keys.append("MAP.info")
+            # M_PATH chunks
+            for i in range(10):
+                keys.append(f"M_PATH.{i}")
+            keys.append("M_PATH.info")
+            # Settings
+            for i in range(5):
+                keys.append(f"SETTINGS.{i}")
+            keys.append("SETTINGS.info")
+
+            batch_data = self._protocol.cloud.get_batch_device_datas(keys)
+            if not batch_data:
+                _LOGGER.debug("No batch data returned from cloud API")
+                return False
+
+            vector_map = parse_batch_map_data(batch_data)
+            if vector_map is None:
+                _LOGGER.debug("Failed to parse batch map data")
+                return False
+
+            self._vector_map = vector_map
+            _LOGGER.debug(
+                "Vector map updated: %d zones, %d paths, boundary=%s",
+                len(vector_map.zones),
+                len(vector_map.paths),
+                vector_map.boundary,
+            )
+            return True
+
+        except Exception as ex:
+            _LOGGER.warning("Failed to fetch vector map from batch API: %s", ex)
+            return False
 
     def _request_map_from_cloud(self) -> bool:
         if self._protocol.cloud.dreame_cloud:
@@ -1271,6 +1330,14 @@ class DreameMapMowerMapManager:
             if not self._available and self._connected:
                 self._available = True
                 self._map_data_changed()
+
+            # Fetch vector map data from batch API (for mower polygon rendering)
+            if self._protocol.dreame_cloud and self._protocol.cloud.connected:
+                if (self._vector_map is None
+                        or self._device_running
+                        or (self._vector_map.last_updated and time.time() - self._vector_map.last_updated > 300)):
+                    if self._fetch_vector_map_from_batch_api():
+                        self._map_data_changed()
         except Exception as ex:
             if self._available:
                 _LOGGER.warning("Map update Failed: %s", traceback.format_exc())

@@ -58,6 +58,7 @@ from .dreame.map import (
     DreameMowerMapRenderer,
     DreameMowerMapDataJsonRenderer,
 )
+from .dreame.map_renderer import MowerVectorMapRenderer
 
 DREAME_TOKEN_CHANGE_INTERVAL: Final = timedelta(minutes=60)
 
@@ -442,12 +443,14 @@ class DreameMowerCameraEntity(DreameMowerEntity, Camera):
     ) -> None:
         """Initialize a Dreame Mower Camera entity."""
         super().__init__(coordinator, description)
+        # Set attributes needed by async_update_token() before Camera.__init__
+        # calls it during setup
+        self._access_token_update_counter = 0
+        self.access_tokens = collections.deque([], 2)
+        Camera.__init__(self)
         self._generate_entity_id(ENTITY_ID_FORMAT)
         self.content_type = PNG_CONTENT_TYPE
         self.stream = None
-        self._access_token_update_counter = 0
-        self.access_tokens = collections.deque([], 2)
-        self.async_update_token()
         self._rtsp_to_webrtc = False
         self._should_poll = True
         self._last_updated = -1
@@ -481,6 +484,8 @@ class DreameMowerCameraEntity(DreameMowerEntity, Camera):
                     square,
                     False,
                 )
+        # Vector map renderer for polygon-based mower maps
+        self._vector_renderer = MowerVectorMapRenderer()
         self._image = None
         self._default_map = True
         self._proxy_images = {}
@@ -631,6 +636,26 @@ class DreameMowerCameraEntity(DreameMowerEntity, Camera):
 
     def update(self) -> None:
         map_data = self._map_data
+
+        # Try vector map rendering even without pixel map data
+        vector_map = self.device.vector_map if self.device else None
+        if vector_map and vector_map.boundary and self.map_index == 0 and not self.map_data_json:
+            vmap_updated = vector_map.last_updated
+            if vmap_updated and vmap_updated != self._last_updated and self._vector_renderer.render_complete:
+                self._last_updated = vmap_updated
+                self._default_map = False
+                self._state = datetime.fromtimestamp(int(vmap_updated))
+                self.coordinator.hass.async_create_task(
+                    self._update_image(
+                        self.device.get_map_for_render(self._map_data) if map_data else None,
+                        self.device.status.robot_status,
+                        0,  # station_status not applicable for mowers
+                    )
+                )
+            # Always return when vector map exists — don't fall through to
+            # pixel map path which would reset state to unavailable
+            return
+
         if map_data and self.device.cloud_connected and (self.map_index > 0 or self.device.status.located):
             self._device_active = self.device.status.active
             if map_data.last_updated:
@@ -775,6 +800,20 @@ class DreameMowerCameraEntity(DreameMowerEntity, Camera):
 
     async def _update_image(self, map_data, robot_status, station_status) -> None:
         try:
+            # Prefer vector map rendering for mower polygon data
+            vector_map = self.device.vector_map if self.device else None
+            if vector_map and vector_map.boundary:
+                rendered = await self.coordinator.hass.async_add_executor_job(
+                    self._vector_renderer.render, vector_map
+                )
+                if rendered:
+                    self._image = rendered
+                    if not self.map_data_json and self._calibration_points != self._renderer.calibration_points:
+                        self._calibration_points = self._renderer.calibration_points
+                        self.coordinator.set_updated_data()
+                    return
+
+            # Fall back to existing pixel-based renderer
             self._image = self._renderer.render_map(map_data, robot_status, station_status)
             if not self.map_data_json and self._calibration_points != self._renderer.calibration_points:
                 self._calibration_points = self._renderer.calibration_points
