@@ -66,10 +66,6 @@ LOCAL: Final = "Manual Connection (Without map)"
 class DreameMowerOptionsFlowHandler(OptionsFlow):
     """Handle Dreame Mower options."""
 
-    def __init__(self, config_entry: ConfigEntry) -> None:
-        """Initialize Dreame Mower options flow."""
-        self.config_entry = config_entry
-
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
@@ -163,7 +159,7 @@ class DreameMowerFlowHandler(ConfigFlow, domain=DOMAIN):
         config_entry: ConfigEntry,
     ) -> DreameMowerOptionsFlowHandler:
         """Get the options flow for this handler."""
-        return DreameMowerOptionsFlowHandler(config_entry)
+        return DreameMowerOptionsFlowHandler()
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
