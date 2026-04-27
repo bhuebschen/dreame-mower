@@ -313,7 +313,7 @@ SENSORS: tuple[DreameMowerSensorEntityDescription, ...] = (
     DreameMowerSensorEntityDescription(
         key="firmware_version",
         icon="mdi:chip",
-        value_fn=lambda value, device: device.info.version,
+        value_fn=lambda value, device: device.info.firmware_version,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
 )

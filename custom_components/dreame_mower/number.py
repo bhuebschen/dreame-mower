@@ -40,6 +40,8 @@ class DreameMowerNumberEntityDescription(DreameMowerEntityDescription, NumberEnt
     segment_list_fn: Callable[[object], bool] = None
 
 
+SEGMENT_NUMBERS: tuple[DreameMowerNumberEntityDescription, ...] = ()
+
 NUMBERS: tuple[DreameMowerNumberEntityDescription, ...] = (
     DreameMowerNumberEntityDescription(
         property_key=DreameMowerProperty.VOLUME,

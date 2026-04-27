@@ -305,7 +305,7 @@ class DreameMapMowerMapManager:
             parameters[MAP_PARAMETER_TIME] = start_time
 
         result = self._request_map(parameters)
-        if result and result[MAP_PARAMETER_CODE] == 0:
+        if result and isinstance(result, dict) and result[MAP_PARAMETER_CODE] == 0:
             out = result[MAP_PARAMETER_OUT]
             _LOGGER.debug("Response from device %s", out)
             has_map = False
@@ -381,7 +381,7 @@ class DreameMapMowerMapManager:
                 MAP_REQUEST_PARAMETER_FRAME_TYPE: MapFrameType.P.name,
             }
         )
-        return bool(result and result[MAP_PARAMETER_CODE] == 0)
+        return bool(result and isinstance(result, dict) and result[MAP_PARAMETER_CODE] == 0)
 
     def _request_next_p_map(self, map_id: int, frame_id: int) -> bool:
         key = f"{map_id}:{frame_id}"
@@ -398,7 +398,7 @@ class DreameMapMowerMapManager:
                 MAP_REQUEST_PARAMETER_FRAME_TYPE: MapFrameType.P.name,
             }
         )
-        if result and result[MAP_PARAMETER_CODE] == 0:
+        if result and isinstance(result, dict) and result[MAP_PARAMETER_CODE] == 0:
             del self._request_queue[key]
 
             object_name = None
@@ -430,7 +430,7 @@ class DreameMapMowerMapManager:
 
     def _request_t_map(self) -> None:
         result = self._request_map({MAP_REQUEST_PARAMETER_FRAME_TYPE: "T"})
-        if result and result[MAP_PARAMETER_CODE] == 0:
+        if result and isinstance(result, dict) and result[MAP_PARAMETER_CODE] == 0:
             self.request_map_list()
 
     def _request_w_map(self) -> None:
@@ -1348,7 +1348,7 @@ class DreameMapMowerMapManager:
             return self._request_i_map()
         else:
             result = self._request_map()
-            if result and result[MAP_PARAMETER_CODE] == 0 and not self._protocol.dreame_cloud:
+            if result and isinstance(result, dict) and result[MAP_PARAMETER_CODE] == 0 and not self._protocol.dreame_cloud:
                 self._request_map_from_cloud()
 
     def request_next_map(self) -> None:
