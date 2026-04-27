@@ -130,7 +130,7 @@ STATE_CODE_TO_STATE: Final = {
     DreameMowerState.SPOT_CLEANING: LawnMowerActivity.MOWING,
     DreameMowerState.SHORTCUT: LawnMowerActivity.MOWING,
     DreameMowerState.WAITING_FOR_TASK: LawnMowerActivity.DOCKED,
-    DreameMowerState.SHORTCUT: LawnMowerActivity.MOWING,
+    DreameMowerState.STATION_CLEANING: LawnMowerActivity.DOCKED,
     DreameMowerState.MONITORING: LawnMowerActivity.MOWING,
     DreameMowerState.MONITORING_PAUSED: LawnMowerActivity.DOCKED,
 }
@@ -597,8 +597,6 @@ class DreameMower(DreameMowerEntity, LawnMowerEntity):
         # if ACTION_AVAILABILITY[DreameMowerAction.START_MOWING.name](self.device):
         self._attr_supported_features = self._attr_supported_features | LawnMowerEntityFeature.START_MOWING
         # if ACTION_AVAILABILITY[DreameMowerAction.PAUSE.name](self.device):
-        self._attr_supported_features = self._attr_supported_features | LawnMowerEntityFeature.PAUSE
-        # if ACTION_AVAILABILITY[DreameMowerAction.STOP.name](self.device):
         self._attr_supported_features = self._attr_supported_features | LawnMowerEntityFeature.PAUSE
         # if ACTION_AVAILABILITY[DreameMowerAction.DOCK.name](self.device):
         self._attr_supported_features = self._attr_supported_features | LawnMowerEntityFeature.DOCK

@@ -198,6 +198,7 @@ class DreameMowerDevice:
         self._dirty_data: dict[DreameMowerProperty, DirtyData] = {}
         self._dirty_auto_switch_data: dict[DreameMowerAutoSwitchProperty, DirtyData] = {}
         self._dirty_ai_data: dict[DreameMowerStrAIProperty | DreameMowerAIProperty, Any] = None
+        self._siid_piid_to_did = None
         self._discard_timeout = 5
         self._restore_timeout = 15
 
@@ -351,13 +352,36 @@ class DreameMowerDevice:
 
                 self._handle_properties(params)
 
+    def _build_siid_piid_map(self):
+        """Build reverse mapping from (siid, piid) to DreameMowerProperty value."""
+        if self._siid_piid_to_did is None:
+            self._siid_piid_to_did = {}
+            for prop, mapping in self.property_mapping.items():
+                if "aiid" not in mapping:
+                    key = (mapping["siid"], mapping["piid"])
+                    if key not in self._siid_piid_to_did:
+                        self._siid_piid_to_did[key] = prop.value
+        return self._siid_piid_to_did
+
     def _handle_properties(self, properties) -> bool:
         changed = False
         callbacks = []
+        siid_piid_map = self._build_siid_piid_map()
         for prop in properties:
             if not isinstance(prop, dict):
                 continue
             did = int(prop["did"])
+            try:
+                DreameMowerProperty(did)
+            except ValueError:
+                siid = prop.get("siid")
+                piid = prop.get("piid")
+                if siid is not None and piid is not None and (siid, piid) in siid_piid_map:
+                    did = siid_piid_map[(siid, piid)]
+                    _LOGGER.debug("Resolved property via siid/piid (%s.%s) -> %s", siid, piid, DreameMowerProperty(did).name)
+                else:
+                    _LOGGER.debug("Skipping unknown property ID %s (siid=%s, piid=%s)", did, prop.get("siid"), prop.get("piid"))
+                    continue
             if prop["code"] == 0 and "value" in prop:
                 value = prop["value"]
                 if did in self._dirty_data:
@@ -1301,7 +1325,7 @@ class DreameMowerDevice:
 
     def schedule_update(self, wait: float = None, force_request_properties=False) -> None:
         """Schedule a device update for future"""
-        if wait == None:
+        if wait is None:
             wait = self._update_interval
 
         if self._update_timer is not None:
@@ -1800,7 +1824,7 @@ class DreameMowerDevice:
                 render_map_data.saved_map_status = 2
 
             if (
-                render_map_data.charger_position == None
+                render_map_data.charger_position is None
                 and render_map_data.docked
                 and render_map_data.robot_position
                 and not render_map_data.saved_map
@@ -2511,14 +2535,14 @@ class DreameMowerDevice:
         if self._map_manager:
             self._map_manager.editor.set_cruise_points([])
 
-        # if self.status.started:
         if not self.status.docked:
             self._update_property(DreameMowerProperty.STATUS, DreameMowerStatus.BACK_HOME.value)
             self._update_property(DreameMowerProperty.STATE, DreameMowerState.RETURNING.value)
 
-        # Clear active segments on current map data
-        # if self._map_manager:
-        #    self._map_manager.editor.set_active_segments([])
+        if self.status.started:
+            self._update_status(DreameMowerTaskStatus.COMPLETED, DreameMowerStatus.BACK_HOME)
+            if self._map_manager:
+                self._map_manager.editor.set_active_segments([])
 
         if not self.capability.cruising:
             self._restore_go_to_zone()
@@ -3572,10 +3596,10 @@ class DreameMowerDevice:
         object_name = recovery_map_info.object_name
         if object_name and object_name != "":
             file, map_url, object_name = self.recovery_map_file(map_id, recovery_map_index)
-            if map_url == None:
+            if map_url is None:
                 raise InvalidActionException("Failed get recovery map file url: %s", object_name)
 
-            if file == None:
+            if file is None:
                 raise InvalidActionException("Failed to download recovery map file: %s", map_url)
 
             response = self.restore_map_from_file(map_url, map_id)
@@ -5310,7 +5334,7 @@ class DreameMowerDeviceStatus:
                 v.order
                 for k, v in sorted(
                     self.current_segments.items(),
-                    key=lambda s: s[1].order if s[1].order != None else 0,
+                    key=lambda s: s[1].order if s[1].order is not None else 0,
                 )
                 if v.order
             ]
