@@ -198,6 +198,13 @@ class DreameMowerDevice:
         self._dirty_data: dict[DreameMowerProperty, DirtyData] = {}
         self._dirty_auto_switch_data: dict[DreameMowerAutoSwitchProperty, DirtyData] = {}
         self._dirty_ai_data: dict[DreameMowerStrAIProperty | DreameMowerAIProperty, Any] = None
+        # Reverse lookup for resolving a property from the (siid, piid) of a response,
+        # first match wins in enum order like the lookup loop in _message_callback
+        self._property_by_siid_piid: dict[tuple[int, int], DreameMowerProperty] = {}
+        for prop in DreameMowerProperty:
+            mapping = self.property_mapping.get(prop)
+            if mapping and "aiid" not in mapping:
+                self._property_by_siid_piid.setdefault((mapping["siid"], mapping["piid"]), prop)
         self._discard_timeout = 5
         self._restore_timeout = 15
 
@@ -357,7 +364,20 @@ class DreameMowerDevice:
         for prop in properties:
             if not isinstance(prop, dict):
                 continue
-            did = int(prop["did"])
+            try:
+                did = int(prop["did"])
+                DreameMowerProperty(did)
+            except (KeyError, ValueError):
+                # Cloud responses can carry the device id in "did", fall back to (siid, piid)
+                mapped_prop = self._property_by_siid_piid.get((prop.get("siid"), prop.get("piid")))
+                if mapped_prop is None:
+                    _LOGGER.debug(
+                        "Skipping response with unmapped property: siid=%s piid=%s",
+                        prop.get("siid"),
+                        prop.get("piid"),
+                    )
+                    continue
+                did = mapped_prop.value
             if prop["code"] == 0 and "value" in prop:
                 value = prop["value"]
                 if did in self._dirty_data:
@@ -474,6 +494,14 @@ class DreameMowerDevice:
                     property_list.append({"did": str(prop.value), **mapping})
 
         results = self._protocol.get_properties(property_list)
+        if results:
+            # The Dreame cloud replies with the device id in "did" instead of echoing
+            # the requested property id, resolve by (siid, piid) like _message_callback does
+            for result in results:
+                if isinstance(result, dict):
+                    prop = self._property_by_siid_piid.get((result.get("siid"), result.get("piid")))
+                    if prop is not None:
+                        result["did"] = str(prop.value)
         return self._handle_properties(results)
 
     def _update_status(self, task_status: DreameMowerTaskStatus, status: DreameMowerStatus) -> None:
