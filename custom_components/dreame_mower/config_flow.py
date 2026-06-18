@@ -55,6 +55,7 @@ model_map = {
     "dreame.mower.p2255": "A1",
     "dreame.mower.g2422": "A1 Pro",
     "dreame.mower.g2408": "A2",
+    "dreame.mower.g2568d": "A2",
     "dreame.mower.g3255": "unknown",
 }
 
@@ -459,7 +460,7 @@ class DreameMowerFlowHandler(ConfigFlow, domain=DOMAIN):
                                 and len(device["customName"]) > 0
                                 else device["deviceInfo"]["displayName"]
                             )
-                            model = model_map[device["model"]]
+                            model = model_map.get(device["model"], device["model"])
                             modelId = device["model"]
                             list_name = f"{name} - {model} ({modelId})"
                             self.devices[list_name] = device
