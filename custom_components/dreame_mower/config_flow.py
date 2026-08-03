@@ -54,6 +54,7 @@ DREAME_MODELS = [
 model_map = {
     "dreame.mower.p2255": "A1",
     "dreame.mower.g2422": "A1 Pro",
+    "dreame.mower.g2540d": "A1 Pro 2000",
     "dreame.mower.g2408": "A2",
     "dreame.mower.g3255": "unknown",
 }
