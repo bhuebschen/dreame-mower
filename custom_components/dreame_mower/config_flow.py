@@ -460,7 +460,9 @@ class DreameMowerFlowHandler(ConfigFlow, domain=DOMAIN):
                                 and len(device["customName"]) > 0
                                 else device["deviceInfo"]["displayName"]
                             )
-                            model = model_map[device["model"]]
+                            model = model_map.get(
+                                device["model"], device["model"]
+                            )
                             modelId = device["model"]
                             list_name = f"{name} - {model} ({modelId})"
                             self.devices[list_name] = device
