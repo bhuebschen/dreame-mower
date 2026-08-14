@@ -17,7 +17,7 @@ from homeassistant.components.lawn_mower import (
     LawnMowerEntity,
     LawnMowerEntityFeature,
 )
-from .recorder import MOWER_UNRECORDED_ATTRIBUTES
+from .unrecorded_attributes import MOWER_UNRECORDED_ATTRIBUTES
 
 from .dreame.const import STATE_UNKNOWN
 from .dreame import (

@@ -27,7 +27,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers import entity_platform, entity_registry
-from .recorder import CAMERA_UNRECORDED_ATTRIBUTES
+from .unrecorded_attributes import CAMERA_UNRECORDED_ATTRIBUTES
 
 from .const import (
     DOMAIN,
