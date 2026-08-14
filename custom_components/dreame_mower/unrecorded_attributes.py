@@ -1,8 +1,6 @@
-"""Integration platform for recorder."""
+"""State attributes excluded from recorder history."""
 
 from __future__ import annotations
-
-from homeassistant.core import HomeAssistant, callback
 
 from .dreame import DreameMowerProperty, DreameMowerAutoSwitchProperty
 from .dreame.const import (
@@ -118,9 +116,3 @@ MOWER_UNRECORDED_ATTRIBUTES = {
     DreameMowerAutoSwitchProperty.CLEANING_ROUTE.name.lower(),
     DreameMowerAutoSwitchProperty.CLEANGENIUS.name.lower(),
 }
-
-
-@callback
-def exclude_attributes(hass: HomeAssistant) -> set[str]:
-    """Exclude mower, camera and sensor attributes from being recorded in the database."""
-    return frozenset(CAMERA_UNRECORDED_ATTRIBUTES) | frozenset(MOWER_UNRECORDED_ATTRIBUTES)
